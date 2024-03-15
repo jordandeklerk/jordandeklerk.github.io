@@ -1,1 +1,1 @@
-# jordandeklerk.github.io
+Personal website to house portfolio https://jordandeklerk.github.io
