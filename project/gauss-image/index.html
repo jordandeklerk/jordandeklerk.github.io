@@ -825,14 +825,14 @@
 
       <p>We need to convert the way Gaussian transformations are made in Jax:</p>
       <pre><code class="language-python">class Gaussian(nn.Module):
-            def __init__(self, num_input_channels, mapping_size=args.mapping_size, scale=args.scale):
-                super(Gaussian, self).__init__()
-                self.B = nn.Parameter(torch.randn(num_input_channels, mapping_size) * scale, requires_grad=False)
+        def __init__(self, num_input_channels, mapping_size=args.mapping_size, scale=args.scale):
+            super(Gaussian, self).__init__()
+            self.B = nn.Parameter(torch.randn(num_input_channels, mapping_size) * scale, requires_grad=False)
         
-            def forward(self, x):
-                x_transformed = torch.matmul(x.permute(0, 2, 3, 1), self.B.to(x.device))
-                x_transformed = 2 * np.pi * x_transformed
-                return torch.cat([torch.sin(x_transformed), torch.cos(x_transformed)], dim=-1).permute(0, 3, 1, 2)
+        def forward(self, x):
+            x_transformed = torch.matmul(x.permute(0, 2, 3, 1), self.B.to(x.device))
+            x_transformed = 2 * np.pi * x_transformed
+            return torch.cat([torch.sin(x_transformed), torch.cos(x_transformed)], dim=-1).permute(0, 3, 1, 2)
     </code></pre>
 
     <p>Note that we use convolutional filters of size 1 which amounts to essentially using an MLP, but with increased cmputational speed due to the batchnorm:</p>
@@ -843,7 +843,7 @@
           nn.BatchNorm2d(out_channels),
       )
   
-  class Model(nn.Module):
+    class Model(nn.Module):
       def __init__(self, device, use_gaussian_transform=False, input_channels=args.input_channels, output_channels=args.output_channels):
           super(Model, self).__init__()
           layers = []
