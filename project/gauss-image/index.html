@@ -824,8 +824,7 @@
       <script>hljs.initHighlightingOnLoad();</script>
 
       <p>We need to convert the way Gaussian transformations are made in Jax:</p>
-      <pre><code class="language-python"># Convert the way the authors define the Gaussian transform to PyTorch
-        class Gaussian(nn.Module):
+      <pre><code class="language-python">class Gaussian(nn.Module):
             def __init__(self, num_input_channels, mapping_size=args.mapping_size, scale=args.scale):
                 super(Gaussian, self).__init__()
                 self.B = nn.Parameter(torch.randn(num_input_channels, mapping_size) * scale, requires_grad=False)
@@ -844,7 +843,6 @@
           nn.BatchNorm2d(out_channels),
       )
   
-  # Essentially an MLP since we're using 1x1 convolutions
   class Model(nn.Module):
       def __init__(self, device, use_gaussian_transform=False, input_channels=args.input_channels, output_channels=args.output_channels):
           super(Model, self).__init__()
