@@ -805,7 +805,7 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
   <div style="position: relative">
-    <img src="/project/amortized-bayes/vae.webp" width="720" height="434" alt="" class="featured-image">
+    <img src="/project/amortized-bayes/vae.png" width="720" height="434" alt="" class="featured-image">
     <span class="article-header-caption">VAE Flow</span>
   </div>
 </div>
@@ -841,33 +841,46 @@
       
       <hr>
       
-      <h2 id="Background">Background</h2>
+      <h3 id="Background">Background</h3>
+
+      <hr>
+
       <h3 id="Introduction">Introduction</h3>
       <p>In the Bayesian paradigm, statistical inference regarding unknown variables is predicated on computations involving posterior probability densities. Due to the often intractable nature of these densities, which typically lack an analytic form, estimation becomes crucial. Classical methods for estimating the posterior distribution in Bayesian inference such as MCMC are known to be computationally expensive at test time as they rely on repeated evaluations of the likelihood function and, therefore, require a new set of likelihood evaluations for each observation. In contrast, Variational Inference (VI) offers a compelling solution by recasting the difficult task of estimating complex posterior densities into a more manageable optimization problem. The essence of VI lies in selecting a parameterized distribution family, \(\mathcal{Q}\), and identifying the member that minimizes the Kullback-Leibler (KL) divergence from the posterior,</p>
       <p>\[ q^* = \arg \min _{q \in \mathcal{Q}} \mathrm{KL}(q(\theta, \mathbf{z}) \| p(\theta, \mathbf{z} \mid \mathbf{x})). \]</p>
-      <!-- Add more sections following the same pattern -->
+      <p>This process enables the approximation of the posterior with \(q^*\), thereby delineating the VI objective to entail the selection of an appropriate variational family \(\mathcal{Q}\) for optimization. Common practice in VI applications involves the adoption of the factorized, or mean-field, family. This family is characterized by the independence of the variables</p>
+
+      <p>\[\mathcal{Q}_{\mathrm{F}}=\left\{q: q(\theta, \mathbf{z})=q_0(\theta) \prod_{n=1}^N q_n\left(z_n\right)\right\},\]</p>
+      <p>wherein each latent variable is represented by a distinct factor \(q_n\).</p>
+      <p>Contrary to the VI framework, the amortized family leverages a stochastic inference function \(f_{\phi}(x_n)\) to dictate the variational distribution of each latent variable \(z_n\), typically instantiated through a neural network, facilitating the parameter mapping for each latent variable's approximating factor \(q_n(z_n)\):</p>
+      <p>\[\mathcal{Q}_{\mathrm{A}}=\left\{q: q(\theta, \mathbf{z})=q_0(\theta) \prod_{n=1}^N q\left(z_n ; f_\phi\left(x_n\right)\right)\right\}.\]</p>
+      <p>This paradigm, known as <em>amortized variational inference</em> (A-VI), optimizes the approximation of the posterior and the inference function simultaneously. Therefore, inference on a single observation can be performed efficiently through a single forward pass through the neural network, framing Bayesian inference as a prediction problem: for <em>any</em> observation, the neural network is trained to predict the posterior distribution, or a quantity that allows the network to infer the posterior without any further simulations.</p>
+
+      <hr>
+
+      <h3>Inference in Variational Autoencoders</h3>
+      <p>Consider \(x\) as the observed variable, \(z\) as the hidden variable, and \(p(x, z)\) representing their joint distribution. For a dataset \(X = \{x_1, x_2, \ldots, x_N\}\), our goal is to maximize the marginal \(\log\)-likelihood with respect to the model parameters \(\theta\), expressed as</p>
+      <p>\[\log p_\theta(X) = \sum_{i=1}^N \log p_\theta(x_i) = \sum_{i=1}^N \log \int p_\theta(x_i, z_i) \, dz_i.\]</p>
+      <p>However, calculating the marginal log-likelihood directly is not feasible due to the integral over the hidden variable \(z\). To address this, Variational Autoencoders (VAEs) employ an inference network \(q_\phi(z | x)\) as an approximation to the actual posterior \(p(z | x)\) and optimize the Evidence Lower Bound (ELBO) relative to both the model parameters \(\theta\) and the parameters \(\phi\) of the inference network:</p>
+      <p>\[\log p(x) = \mathbb{E}_{q(z | x)}\left[\log \left(\frac{p(x, z)}{q(z | x)}\right)\right] + \text{KL}(q(z | x) \| p(z | x)) \geq \mathbb{E}_{q(z | x)}\left[\log \left(\frac{p(x, z)}{q(z | x)}\right)\right] = \mathcal{L}_{\text{VAE}}[q].\]</p>
+      <p>The ELBO is equivalent to the true log likelihood when \(q(z | x) = p(z | x)\). Typically, \(q(z | x)\) is chosen to be a factorized Gaussian for its simplicity and computational efficiency. VAEs leverage the inference network (also known as the encoder or recognition network) to generalize inference across the entire dataset efficiently. The model is trained by stochastically optimizing the ELBO through the reparametrization trick, introduced by Kingma.</p>
+
+      <hr>
+
+      <h3>Amortization Gap</h3>
+
+      <p>As illustrated in Cremer, the inference gap, denoted as \(\mathcal{G}\), represents the discrepancy between the marginal \(\log p(x)\), and a specific lower bound, \(\mathcal{L}[q]\). Identifying the distribution within the set that optimizes this bound, denoted as \(q^*(z | x) = \arg \max _{q \in \mathcal{Q}} \mathcal{L}[q]\), allows for the decomposition of \(\mathcal{G}\) into two distinct components: the <em>approximation gap</em> and the <em>amortization gap</em>, expressed as</p>
+
+      <p>\[\mathcal{G} = \log p(x) - \mathcal{L}[q] = \underbrace{\log p(x) - \mathcal{L}\left[q^*\right]}_{\text{Approximation}} + \underbrace{\mathcal{L}\left[q^*\right] - \mathcal{L}[q]}_{\text{Amortization}}.\]</p>
+
+      <p>In the context of Variational Autoencoders (VAEs), these gaps can be articulated through KL divergences by reorganizing the equation as follows:</p>
+
+      <p>\[\begin{aligned}
+      \mathcal{G}_{\mathrm{VAE}} & = \underbrace{\text{KL}\left(q^*(z | x) \| p(z | x)\right)}_{\text{Approximation}} + \underbrace{\text{KL}(q(z | x) \| p(z | x)) - \text{KL}\left(q^*(z | x) \| p(z | x)\right)}_{\text{Amortization}}.
+      \end{aligned}\]</p>
+
+      <hr>
       
-      <h2 id="Model-Setup">Model Setup</h2>
-      <!-- Model setup content -->
-      
-      <h2 id="Results">Results</h2>
-      <!-- Results content -->
-      
-      <h2 id="References">References</h2>
-      <pre>
-      @misc{Ganguly2023,
-          title = {Amortized Variational Inference: A Systematic Review},
-          author = {Ankush Ganguly and Sanjana Jain and Ukrit Watchareeruetai},
-          year = {2023},
-          eprint = {2209.10888},
-          archivePrefix = {arXiv},
-          primaryClass = {cs.AI},
-          journal = {Journal of Artificial Intelligence Research},
-          volume = {78},
-          pages = {167--215},
-          url = {https://arxiv.org/abs/2209.10888},
-          keywords = {Bayesian}
-      }
       </pre>
 
 
