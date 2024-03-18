@@ -803,15 +803,13 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px; margin-bottom: 20px;">
   <div style="position: relative">
     <img src="/project/vit/vit.gif" width="720" height="434" alt="" class="featured-image">
     <span class="article-header-caption">ViT</span>
   </div>
 </div>
 
-<p></p>
-<p></p>
 
   <div class="article-container">
 
@@ -823,36 +821,38 @@
       <p>Vision Transformers often suffer when trained from scratch on small datasets such as CIFAR-10. This is primarily due to the lack of locality, inductive biases and hierarchical structure of the representations which is commonly observed in the Convolutional Neural Networks. As a result, ViTs require large-scale pre-training to learn such properties from the data for better transfer learning to downstream tasks.</p>
       <p>This project shows that with modifications, supervised training of vision transformer models on small scale datasets like CIFAR-10 can lead to very high accuracy with low computational constraints. </p>
       <p>The vanilla vision transformer model uses the standard multi-head self-attention mechanism:</p>
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
 
-      <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python">
-        <span class="line"><span class="k">class</span> <span class="nf">Attention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span></span>
-        <span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">qkv_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">qk_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attn_drop</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">proj_drop</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span></span>
-        <span class="line">        <span class="n">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span></span>
-        <span class="line">        <span class="n">head_dim</span> <span class="o">=</span> <span class="n">dim</span> <span class="o">//</span> <span class="n">num_heads</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">qk_scale</span> <span class="o">or</span> <span class="n">head_dim</span> <span class="o">**</span> <span class="n">-0.5</span></span>
-        <span class="line">        <span class="n">all_head_dim</span> <span class="o">=</span> <span class="n">head_dim</span> <span class="o">*</span> <span class="n">self</span><span class="o">.</span><span class="n">num_heads</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">qkv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">qkv_bias</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">attn_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">attn_drop</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">all_head_dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">self</span><span class="o">.</span><span class="n">proj_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">proj_drop</span><span class="p">)</span></span>
-        <span class="line"></span>
-        <span class="line">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span></span>
-        <span class="line">        <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span></span>
-        <span class="line">        </span>
-        <span class="line">        <span class="n">qkv</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">qkv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">C</span> <span class="o">//</span> <span class="n">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="n">3</span><span class="p">,</span> <span class="n">1</span><span class="p">,</span> <span class="n">4</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">qkv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">qkv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">qkv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></span>
-        <span class="line"></span>
-        <span class="line">        <span class="n">attn</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">@</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">self</span><span class="o">.</span><span class="n">scale</span></span>
-        <span class="line">        <span class="n">attn</span> <span class="o">=</span> <span class="n">attn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">attn</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">attn_drop</span><span class="p">(</span><span class="n">attn</span><span class="p">)</span></span>
-        <span class="line"></span>
-        <span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">attn</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">proj</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></span>
-        <span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">proj_drop</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></span>
-        <span class="line">        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">attn</span></span>
-        </code></pre></div>
-        
+      <pre><code class="language-python">class Attention(nn.Module):
+        def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
+            super().__init__()
+            self.num_heads = num_heads
+            head_dim = dim // num_heads
+            self.scale = qk_scale or head_dim ** -0.5
+            all_head_dim = head_dim * self.num_heads
+            self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
+            self.attn_drop = nn.Dropout(attn_drop)
+            self.proj = nn.Linear(all_head_dim, dim)
+            self.proj_drop = nn.Dropout(proj_drop)
+    
+        def forward(self, x):
+            B, N, C = x.shape
+            
+            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+            q, k, v = qkv[0], qkv[1], qkv[2]
+    
+            attn = (q @ k.transpose(-2, -1)) * self.scale
+            attn = attn.softmax(dim=-1)
+            attn = self.attn_drop(attn)
+    
+            x = (attn @ v).transpose(1, 2).reshape(B, N, C)
+            x = self.proj(x)
+            x = self.proj_drop(x)
+            return x, attn
+    </code></pre>
     
     
 
