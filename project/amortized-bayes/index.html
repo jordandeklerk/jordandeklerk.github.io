@@ -832,7 +832,7 @@
     <div class="article-style">
       <!-- <h1>Closing the Amortization Gap in Bayesian Deep Generative Models</h1> -->
       
-      <h2>Contents</h2>
+      <h1>Contents</h1>
       <ul>
           <li><a href="#Introduction">Introduction</a>
               <ul>
@@ -853,7 +853,7 @@
       
       <hr>
 
-      <h3 id="Introduction">Introduction</h3>
+      <h2 id="Introduction">Introduction</h2>
       <p>In the Bayesian paradigm, statistical inference regarding unknown variables is predicated on computations involving posterior probability densities. Due to the often intractable nature of these densities, which typically lack an analytic form, estimation becomes crucial. Classical methods for estimating the posterior distribution in Bayesian inference such as MCMC are known to be computationally expensive at test time as they rely on repeated evaluations of the likelihood function and, therefore, require a new set of likelihood evaluations for each observation. In contrast, Variational Inference (VI) offers a compelling solution by recasting the difficult task of estimating complex posterior densities into a more manageable optimization problem. The essence of VI lies in selecting a parameterized distribution family, \(\mathcal{Q}\), and identifying the member that minimizes the Kullback-Leibler (KL) divergence from the posterior,</p>
       <p>\[ q^* = \arg \min _{q \in \mathcal{Q}} \mathrm{KL}(q(\theta, \mathbf{z}) \| p(\theta, \mathbf{z} \mid \mathbf{x})). \]</p>
       <p>This process enables the approximation of the posterior with \(q^*\), thereby delineating the VI objective to entail the selection of an appropriate variational family \(\mathcal{Q}\) for optimization. Common practice in VI applications involves the adoption of the factorized, or mean-field, family. This family is characterized by the independence of the variables</p>
@@ -864,7 +864,7 @@
       <p>\[\mathcal{Q}_{\mathrm{A}}=\left\{q: q(\theta, \mathbf{z})=q_0(\theta) \prod_{n=1}^N q\left(z_n ; f_\phi\left(x_n\right)\right)\right\}.\]</p>
       <p>This paradigm, known as <em>amortized variational inference</em> (A-VI), optimizes the approximation of the posterior and the inference function simultaneously. Therefore, inference on a single observation can be performed efficiently through a single forward pass through the neural network, framing Bayesian inference as a prediction problem: for <em>any</em> observation, the neural network is trained to predict the posterior distribution, or a quantity that allows the network to infer the posterior without any further simulations.</p>
 
-      <h4 id="Inference-in-Variational-Autoencoders">Inference in Variational Autoencoders</h4>
+      <h3 id="Inference-in-Variational-Autoencoders">Inference in Variational Autoencoders</h3>
       <p>Consider \(x\) as the observed variable, \(z\) as the hidden variable, and \(p(x, z)\) representing their joint distribution. For a dataset \(X = \{x_1, x_2, \ldots, x_N\}\), our goal is to maximize the marginal \(\log\)-likelihood with respect to the model parameters \(\theta\), expressed as</p>
       <p>\[\log p_\theta(X) = \sum_{i=1}^N \log p_\theta(x_i) = \sum_{i=1}^N \log \int p_\theta(x_i, z_i) \, dz_i.\]</p>
       <p>However, calculating the marginal log-likelihood directly is not feasible due to the integral over the hidden variable \(z\). To address this, Variational Autoencoders (VAEs) employ an inference network \(q_\phi(z | x)\) as an approximation to the actual posterior \(p(z | x)\) and optimize the Evidence Lower Bound (ELBO) relative to both the model parameters \(\theta\) and the parameters \(\phi\) of the inference network:</p>
@@ -880,7 +880,7 @@
       </p>
       <p>The ELBO is equivalent to the true log likelihood when \(q(z | x) = p(z | x)\). Typically, \(q(z | x)\) is chosen to be a factorized Gaussian for its simplicity and computational efficiency. VAEs leverage the inference network (also known as the encoder or recognition network) to generalize inference across the entire dataset efficiently. The model is trained by stochastically optimizing the ELBO through the reparametrization trick, introduced by Kingma.</p>
 
-      <h5 id="Amortization-Gap">Amortization Gap</h5>
+      <h3 id="Amortization-Gap">Amortization Gap</h3>
 
       <p>As illustrated in Cremer, the inference gap, denoted as \(\mathcal{G}\), represents the discrepancy between the marginal \(\log p(x)\), and a specific lower bound, \(\mathcal{L}[q]\). Identifying the distribution within the set that optimizes this bound, denoted as \(q^*(z | x) = \arg \max _{q \in \mathcal{Q}} \mathcal{L}[q]\), allows for the decomposition of \(\mathcal{G}\) into two distinct components: the <em>approximation gap</em> and the <em>amortization gap</em>, expressed as</p>
       <p>\[\mathcal{G} = \log p(x) - \mathcal{L}[q] = \underbrace{\log p(x) - \mathcal{L}\left[q^*\right]}_{\text{Approximation}} + \underbrace{\mathcal{L}\left[q^*\right] - \mathcal{L}[q]}_{\text{Amortization}}.\]</p>
@@ -891,7 +891,7 @@
 
       <hr>
 
-      <h6 id="#Model-Setup">Setup</h6>
+      <h4 id="#Model-Setup">Model Setup</h4>
       <p>In all models, we do full Bayesian inference over \(\theta\) and \(z\). The specifics of our approach include:</p>
       <ul>
           <li>For our variational approximation, we use the family of factorized Gaussians.</li>
@@ -902,7 +902,7 @@
           <li>The model is trained for 5,000 epochs on 10,000 images. At each iteration, the ELBO is evaluated on a mini-batch of 1,000 images, with each epoch consisting of 10 iterations.</li>
       </ul>
 
-      <h7 id="#Encoder">Encoder</h7>
+      <h4 id="#Encoder">Encoder</h4>
       <p>The encoder in a VAE transforms the input data, \(x\), into a latent space representation by producing two vectors: the mean \(\mu\) and the logarithm of the variance \(\left(\log \left(\sigma^2\right) \right)\). The encoder architecture comprises sequential linear layers with LeakyReLU activations, followed by separate linear layers for \(\mu\) and \(\log \left(\sigma^2\right)\).</p>
       <p>Given an input \(x \in \mathbb{R}^{m}\), the encoder performs the following operations:</p>
       <ol>
@@ -910,7 +910,7 @@
           <li>The final hidden representation, \(h\), is used to compute the mean vector, \(\mu=W_\mu h+b_\mu\), and the log-variance vector, \(\log \left(\sigma^2\right)=W_\sigma h+b_\sigma\), through separate linear layers.</li>
       </ol>
 
-      <h8 id="#Decoder">Decoder</h8>
+      <h4 id="#Decoder">Decoder</h4>
       <p>The decoder reconstructs the data from the latent space representation, \(z\), by applying a series of linear transformations and LeakyReLU activations. Specifically, the decoder has the following formulation:</p>
       <ol>
           <li>The latent input \(z \in \mathbb{R}^n\) is transformed through a linear layer: \(h_1= \text{LeakyReLU} \left(z W_1^T+b_1\right),\) where \(W_1\) and \(b_1\) are the weights and biases of the first transformation layer, respectively.</li>
@@ -918,12 +918,12 @@
           <li>The final reconstruction is obtained through a linear transformation of \(h_2: x_{\text {reconstructed }}= h_2 W_3^T+b_3\), with \(W_3\) and \(b_3\) denoting the weights and biases for the output layer.</li>
       </ol>
 
-      <h9 id="#Datasets">Datasets</h9>
+      <h4 id="#Datasets">Datasets</h4>
       <p>The models are evaluated using a variety of datasets including <em>CIFAR-10</em>, <em>FashionMNIST</em>, and <em>MNIST</em> to ensure a comprehensive assessment across different types of visual data.</p>
 
       <hr>
 
-      <h10 id="#Results">Results</h10>
+      <h5 id="#Results">Results</h5>
       <p>The results that follow will be shown for the MNIST dataset. We found similar results for all of the datasets used in this project.</p>
 
       <p>Below is the <em>negative ELBO</em> loss for A-VI (with varying hidden dimension widths) vs F-VI and constant-VI. We see that A-VI was able to close the gap to F-VI.</p>
@@ -938,7 +938,7 @@
 
       <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
         <div style="position: relative">
-          <img src="/project/amortized-bayes/mnist_elbo.png" width="720" height="434" alt="" class="featured-image">
+          <img src="/project/amortized-bayes/mnist_mse.png" width="720" height="434" alt="" class="featured-image">
         </div>
       </div>
 
@@ -946,7 +946,7 @@
 
       <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
         <div style="position: relative">
-          <img src="/project/amortized-bayes/mnist_mse.png" width="720" height="434" alt="" class="featured-image">
+          <img src="/project/amortized-bayes/mnist_mse_test.png" width="720" height="434" alt="" class="featured-image">
         </div>
       </div>
 
@@ -954,7 +954,7 @@
 
       <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
         <div style="position: relative">
-          <img src="/project/amortized-bayes/mnist_mse_test.png" width="720" height="434" alt="" class="featured-image">
+          <img src="/project/amortized-bayes/mnist_seeds.png" width="720" height="434" alt="" class="featured-image">
         </div>
       </div>
 
