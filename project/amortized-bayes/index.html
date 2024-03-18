@@ -368,6 +368,21 @@
 }
 </script>
 
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      linebreak: { automatic: true, width: "container" } // Enable automatic line breaks
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+  </script>
+  
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
@@ -897,7 +912,7 @@
       </ol>
 
       <h9 id="Datasets"></h9>
-      <p>The models are evaluated using a variety of datasets including `CIFAR-10`, `FashionMNIST`, and `MNIST` to ensure a comprehensive assessment across different types of visual data.</p>
+      <p>The models are evaluated using a variety of datasets including <em>CIFAR-10</em>, <em>FashionMNIST</em>, and <em>MNIST</em> to ensure a comprehensive assessment across different types of visual data.</p>
 
       <hr>
 
