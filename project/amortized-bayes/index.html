@@ -902,7 +902,7 @@
           <li>The model is trained for 5,000 epochs on 10,000 images. At each iteration, the ELBO is evaluated on a mini-batch of 1,000 images, with each epoch consisting of 10 iterations.</li>
       </ul>
 
-      <h7 id="Encoder">Encoder</h7>
+      <h7 id="#Encoder">Encoder</h7>
       <p>The encoder in a VAE transforms the input data, \(x\), into a latent space representation by producing two vectors: the mean \(\mu\) and the logarithm of the variance \(\left(\log \left(\sigma^2\right) \right)\). The encoder architecture comprises sequential linear layers with LeakyReLU activations, followed by separate linear layers for \(\mu\) and \(\log \left(\sigma^2\right)\).</p>
       <p>Given an input \(x \in \mathbb{R}^{m}\), the encoder performs the following operations:</p>
       <ol>
@@ -910,7 +910,7 @@
           <li>The final hidden representation, \(h\), is used to compute the mean vector, \(\mu=W_\mu h+b_\mu\), and the log-variance vector, \(\log \left(\sigma^2\right)=W_\sigma h+b_\sigma\), through separate linear layers.</li>
       </ol>
 
-      <h8 id="Decoder">Decoder</h8>
+      <h8 id="#Decoder">Decoder</h8>
       <p>The decoder reconstructs the data from the latent space representation, \(z\), by applying a series of linear transformations and LeakyReLU activations. Specifically, the decoder has the following formulation:</p>
       <ol>
           <li>The latent input \(z \in \mathbb{R}^n\) is transformed through a linear layer: \(h_1= \text{LeakyReLU} \left(z W_1^T+b_1\right),\) where \(W_1\) and \(b_1\) are the weights and biases of the first transformation layer, respectively.</li>
@@ -918,10 +918,53 @@
           <li>The final reconstruction is obtained through a linear transformation of \(h_2: x_{\text {reconstructed }}= h_2 W_3^T+b_3\), with \(W_3\) and \(b_3\) denoting the weights and biases for the output layer.</li>
       </ol>
 
-      <h9 id="Datasets">Datasets</h9>
+      <h9 id="#Datasets">Datasets</h9>
       <p>The models are evaluated using a variety of datasets including <em>CIFAR-10</em>, <em>FashionMNIST</em>, and <em>MNIST</em> to ensure a comprehensive assessment across different types of visual data.</p>
 
       <hr>
+
+      <h10 id="#Results">Results</h10>
+      <p>The results that follow will be shown for the MNIST dataset. We found similar results for all of the datasets used in this project.</p>
+
+      <p>Below is the <em>negative ELBO</em> loss for A-VI (with varying hidden dimension widths) vs F-VI and constant-VI. We see that A-VI was able to close the gap to F-VI.</p>
+
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+        <div style="position: relative">
+          <img src="/project/amortized-bayes/mnist_elbo.png" width="720" height="434" alt="" class="featured-image">
+        </div>
+      </div>
+
+      <p>Below is the <em>reconstruction MSE on the training set </em> for all algorithms. We see that A-VI was able to close the gap to F-VI.</p>
+
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+        <div style="position: relative">
+          <img src="/project/amortized-bayes/mnist_elbo.png" width="720" height="434" alt="" class="featured-image">
+        </div>
+      </div>
+
+      <p>Below is the <em>reconstruction MSE on the test set</em> for all algorithms. We see that A-VI was able to close the gap to constant-VI (note that F-VI is not available at test time).</p>
+
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+        <div style="position: relative">
+          <img src="/project/amortized-bayes/mnist_mse.png" width="720" height="434" alt="" class="featured-image">
+        </div>
+      </div>
+
+      <p>Since the process of evaluating the amortization gap is inherently random, below are the results over 5 different random seeds. We see that we have similar results across all seeds.</p>
+
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+        <div style="position: relative">
+          <img src="/project/amortized-bayes/mnist_mse_test.png" width="720" height="434" alt="" class="featured-image">
+        </div>
+      </div>
+
+      <p>We can see below that A-VI is considerably faster than F-VI since we only require a single forward pass through the neural network at inference time.</p>
+
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
+        <div style="position: relative">
+          <img src="/project/amortized-bayes/mnist_compute.png" width="720" height="434" alt="" class="featured-image">
+        </div>
+      </div>
 
 
       </pre>
