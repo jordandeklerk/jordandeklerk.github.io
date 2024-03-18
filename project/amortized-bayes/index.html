@@ -898,6 +898,67 @@
           <li>The final hidden representation, \(h\), is used to compute the mean vector, \(\mu=W_\mu h+b_\mu\), and the log-variance vector, \(\log \left(\sigma^2\right)=W_\sigma h+b_\sigma\), through separate linear layers.</li>
       </ol>
 
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+
+      <pre><code class="language-python">class Encoder(nn.Module):
+        """
+        Encoder module for a Variational Autoencoder (VAE), transforming input data into a latent space representation.
+    
+        The encoder consists of sequential linear layers with LeakyReLU activations, followed by separate linear layers
+        for producing the mean and log variance vectors.
+    
+        Parameters:
+        - input_dim (int): Dimensionality of the input data.
+        - hidden_dim (int): Size of the hidden layer(s). This implementation uses two hidden layers of the same size.
+        - latent_dim (int): Dimensionality of the latent space representation (output).
+        - use_bias (bool, optional): Whether to include bias terms in the linear layers (default: True).
+        """
+        def __init__(self, input_dim, hidden_dims, latent_dim, use_bias=True):
+            super(Encoder, self).__init__()
+            layers = [nn.Linear(input_dim, hidden_dims[0], bias=use_bias), nn.LeakyReLU(0.2)]
+            layers.extend([
+                nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=use_bias) for i in range(len(hidden_dims) - 1)
+            ])
+            layers.append(nn.LeakyReLU(0.2))
+    
+            self.features = nn.Sequential(*layers)
+            self.FC_mean = nn.Linear(hidden_dims[-1], latent_dim, bias=use_bias)
+            self.FC_sd_log = nn.Linear(hidden_dims[-1], latent_dim, bias=use_bias)
+    
+        def forward(self, x):
+            h = self.features(x)
+            mean = self.FC_mean(h)
+            sd_log = self.FC_sd_log(h)
+            return mean, sd_log
+    
+        def init_weights(self, nu_mean_z=None, nu_sd_z_log=None, init_type='zero', device='cpu'):
+            """
+            Initializes the encoder's weights and biases, supporting custom initial values for
+            mean and log standard deviation biases, and allowing for more initialization types.
+    
+            Parameters:
+            - nu_mean_z: Initial value for the variational mean of z, applicable to FC_mean bias.
+            - nu_sd_z_log: Initial values for the variational log standard deviation of z, applicable to FC_sd_log bias.
+            - init_type (str, optional): The type of weight initialization ('zero', 'normal', etc.).
+            - device: The device to allocate tensors to ('cpu', 'cuda', etc.).
+            """
+            for m in self.modules():
+                if isinstance(m, nn.Linear):
+                    if init_type == 'zero':
+                        nn.init.zeros_(m.weight)
+                    elif init_type == 'normal':
+                        nn.init.normal_(m.weight, mean=0.0, std=0.02)
+                    if m.bias is not None:
+                        nn.init.constant_(m.bias, 0)
+    
+            if nu_mean_z is not None:
+                self.FC_mean.bias.data = nu_mean_z.to(device)
+            if nu_sd_z_log is not None:
+                self.FC_sd_log.bias.data = nu_sd_z_log.to(device)
+    </code></pre>
+
       <h4 id="Decoder">Decoder</h4>
 
       <p>The decoder reconstructs the data from the latent space representation, \(z\), by applying a series of linear transformations and LeakyReLU activations. Specifically, the decoder has the following formulation:</p>
@@ -906,6 +967,43 @@
           <li>The resulting hidden representation \(h_1\) is further processed: \(h_2=\text{LeakyReLU}\left(h_1 W_2^T+b_2\right),\) utilizing another set of weights and biases \(\left(W_2, b_2\right)\) for the second transformation.</li>
           <li>The final reconstruction is obtained through a linear transformation of \(h_2: x_{\text {reconstructed }}= h_2 W_3^T+b_3\), with \(W_3\) and \(b_3\) denoting the weights and biases for the output layer.</li>
       </ol>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+
+      <pre><code class="language-python">def Decoder(theta, z, latent_dim, hidden_dim, x_dim):
+        """
+        Reconstructs the network output from latent inputs using specified network architecture.
+    
+        Args:
+            theta (Tensor): A flat tensor of the network's parameters (weights and biases),
+                            ordered with all weights first followed by all biases.
+            z (Tensor): The latent inputs to the network, typically representing encoded data.
+            latent_dim (int): The size of the latent input dimension.
+            hidden_dim (int): The size of the hidden layers in the network.
+            x_dim (int): The size of the output dimension, or the dimensionality of the data being reconstructed.
+    
+        Returns:
+            Tensor: The reconstructed output from the network.
+        """
+        expected_theta_size = latent_dim * hidden_dim + hidden_dim**2 + hidden_dim * x_dim + 2 * hidden_dim + x_dim
+        if theta.numel() != expected_theta_size:
+            raise ValueError("Theta size does not match the expected size based on dimensions.")
+    
+        indices = [latent_dim * hidden_dim, hidden_dim**2, hidden_dim * x_dim, hidden_dim, hidden_dim, x_dim]
+        splits = torch.split(theta, indices)
+        W1, W2, W3, b1, b2, b3 = [splits[i].reshape(shape) for i, shape in enumerate([
+            (hidden_dim, latent_dim), (hidden_dim, hidden_dim), (x_dim, hidden_dim),
+            (hidden_dim,), (hidden_dim,), (x_dim,)
+        ])]
+    
+        LeakyRelu = nn.LeakyReLU(0.2)
+        h = LeakyRelu(z @ W1.T + b1)
+        h = LeakyRelu(h @ W2.T + b2)
+        out = h @ W3.T + b3
+        return out
+    </code></pre>
 
       <h4 id="Datasets">Datasets</h4>
 
