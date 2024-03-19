@@ -80,7 +80,7 @@
   <meta name="description" content="♔ Chess-playing with AI (Stockfish engine) and Predict best chess move in Real-Time" />
 
   
-  <link rel="alternate" hreflang="en-us" href="https://jordandeklerk.com/project/gauss-image/" />
+  <link rel="alternate" hreflang="en-us" href="https://jordandeklerk.com/project/swin/" />
 
   
   
@@ -282,7 +282,7 @@
   <link rel="icon" type="image/png" href="/media/icon_hu41efe379c510cbcb4aedbab62762f822_9038_32x32_fill_lanczos_center_3.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu41efe379c510cbcb4aedbab62762f822_9038_180x180_fill_lanczos_center_3.png" />
 
-  <link rel="canonical" href="https://jordandeklerk.com/project/gauss-image/" />
+  <link rel="canonical" href="https://jordandeklerk.com/project/swin/" />
 
   
   
@@ -307,7 +307,7 @@
     <meta property="twitter:creator" content="@wowchemy" />
   
   <meta property="og:site_name" content="Jordan Deklerk" />
-  <meta property="og:url" content="https://jordandeklerk.com/project/gauss-image/" />
+  <meta property="og:url" content="https://jordandeklerk.com/project/swin/" />
   <meta property="og:title" content="Vision Transformer | Jordan Deklerk" />
   <meta property="og:description" content="♔ Chess-playing with AI (Stockfish engine) and Predict best chess move in Real-Time" /><meta property="og:image" content="https://vatsalparsaniya.com/project/yolo_segmentation_chess/featured.png" />
     <meta property="twitter:image" content="https://vatsalparsaniya.com/project/yolo_segmentation_chess/featured.png" /><meta property="og:locale" content="en-us" />
@@ -340,12 +340,12 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://jordandeklerk.com/project/gauss-image/"
+    "@id": "https://jordandeklerk.com/project/vit/"
   },
   "headline": "Vision Transformer",
   
   "image": [
-    "https://jordandeklerk.com/project/gauss-image/https://user-images.githubusercontent.com/3310961/85066930-ad444580-b164-11ea-9cc0-17494679e71f.png"
+    "https://jordandeklerk.com/project/vit/vit.png"
   ],
   
   "datePublished": "2024-03-1T19:26:00+05:30",
@@ -377,7 +377,7 @@
   
 
 
-  <title>Fourier Feature Image Memorization | Jordan Deklerk</title>
+  <title>Swin Vision Transformer | Jordan Deklerk</title>
 
   
   
@@ -727,7 +727,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>Fourier Feature Image Memorization</h1>
+  <h1>Swin Vision Transformer</h1>
 
   
 
@@ -783,12 +783,12 @@
 
 
 <div class="btn-links" style="display: flex; align-items: center; gap: 10px;">
-  <a class="btn btn-outline-primary btn-page-header btn-sm" href="https://github.com/jordandeklerk/Gaussian-Image" target="_blank" rel="noopener">
-      <i class="fab fa-github mr-1"></i>Gaussian-Image
+  <a class="btn btn-outline-primary btn-page-header btn-sm" href="https://github.com/jordandeklerk/SwinViT" target="_blank" rel="noopener">
+      <i class="fab fa-github mr-1"></i>SwinViT
   </a>
 
   <!-- Jupyter Notebook Link -->
-  <a href="/project/gauss-image/gauss_image.ipynb" target="_blank" rel="noopener">
+  <a href="/project/swin/swin.ipynb" target="_blank" rel="noopener">
       <img src="https://img.shields.io/badge/Jupyter-View_Notebook-orange?logo=Jupyter" alt="Jupyter Notebook">
   </a> <!-- Closing the Jupyter notebook link tag here -->
 
@@ -805,7 +805,8 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
   <div style="position: relative">
-    <img src="/project/gauss-image/gauss.png" width="720" height="434" alt="" class="featured-image">
+    <img src="/project/swin/swin2.png" width="720" height="434" alt="" class="featured-image">
+    <span class="article-header-caption">SwinViT</span>
   </div>
 </div>
 
@@ -816,81 +817,44 @@
       
       <h3>Highlights</h3>
 
-      <p>This project is based on the course <em>Deep Learning for Computer Vision at UIUC (CS 444 Spring 2024)</em>. In this project, we will implement multi-layer neural networks and backpropagation from scratch to “memorize” an image. Specifically, we will write our own forward and backward pass and train a four-layer network with SGD and Adam optimizers. The network's weights will be updated to minimize a mean square error (MSE) loss between the original and reconstructed images. Then, we will use a traditional PyTorch framework to improve our model from scratch. We will re-write the author's code from Jax to PyTorch. </p>
-      <p>The project shows that passing input points through a simple Fourier feature mapping enables a multilayer perceptron (MLP) to learn high-frequency functions in low-dimensional problem domains. These results shed light on recent advances in computer vision and graphics that achieve state-of-the-art results by using MLPs to represent complex 3D objects and scenes.</p>
-      
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+      <p>This project is a implementation from scratch of a slightly modified version of the Swin transformer introduced in the paper "<em>Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</em>."" We implement this model on the small scale benchmark dataset CIFAR-10. </p>
+      <p>Swin Transformer (the name `Swin` stands for Shifted window) capably serves as a general-purpose backbone for computer vision tasks. It is basically a hierarchical Transformer whose representation is computed with shifted windows. The shifted windowing scheme brings greater efficiency by limiting self-attention computation to non-overlapping local windows while also allowing for cross-window connection.</p>
+      <p>The proposed Swin Transformer builds hierarchical feature maps by merging image patches in deeper layers and has linear computation complexity to input image size due to computation of self-attention only within each local window (shown in red). It can thus serve as a general-purpose backbone for both image classification and dense recognition tasks. In contrast, previous vision Transformers produce feature maps of a single low resolution and have quadratic computation complexity to input image size due to computation of self-attention globally.</p>
+      <p>Swin departs from the traditional method of computing self-attention and implements a shifted window approach for computing self-attention. In layer \(l\), a regular window partitioning scheme is adopted, and self-attention is computed within each window. In the next layer \(l+1\), the window partitioning is shifted, resulting in new windows. The self-attention computation in the new windows crosses the boundaries of the previous windows in layer \(l\), providing connections among them. </p>
+      <p>This project focuses on implementing Swin on an image classification task and shows that with modifications, supervised training of the Swin transformer model on small scale datasets like, among others, CIFAR-10 can lead to very high accuracy with low computational constraints.</p>
+
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script>
 
-      <h4>Model</h4>
-      <p>We use convolutional filters of size 1 which amounts to essentially using an MLP, but with increased computational speed due to the batchnorm:</p>
-      <pre><code class="language-python">def conv_block(in_channels, out_channels, *args, **kwargs):
-        return nn.Sequential(
-            nn.Conv2d(in_channels, out_channels, *args, **kwargs),
-            nn.ReLU(),
-            nn.BatchNorm2d(out_channels),
-        )
-  
-      class Model(nn.Module):
-        def __init__(self, device, use_gaussian_transform=False, input_channels=args.input_channels, output_channels=args.output_channels):
-            super(Model, self).__init__()
-            layers = []
-    
-            if use_gaussian_transform:
-                layers.append(Gaussian(input_channels, 128, 10))
-                input_channels = 256
-    
-            layers.extend([
-                conv_block(input_channels, 256, kernel_size=1),
-                conv_block(256, 256, kernel_size=1),
-                conv_block(256, 256, kernel_size=1),
-                nn.Conv2d(256, output_channels, kernel_size=1),
-                nn.Sigmoid(),
-            ])
-    
-            self.model = nn.Sequential(*layers)
-            self.to(device)
+      <pre><code class="language-python">class Attention(nn.Module):
+        def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
+            super().__init__()
+            self.num_heads = num_heads
+            head_dim = dim // num_heads
+            self.scale = qk_scale or head_dim ** -0.5
+            all_head_dim = head_dim * self.num_heads
+            self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
+            self.attn_drop = nn.Dropout(attn_drop)
+            self.proj = nn.Linear(all_head_dim, dim)
+            self.proj_drop = nn.Dropout(proj_drop)
     
         def forward(self, x):
-            return self.model(x)
-    </code></pre>
-
-    <h3>Results</h3>
-
-    Below are the results from several experiments using different optimizers and feature mappings
-
-    <h5>Low Resolution Image - Neural Net from Scratch</h5>
-
-    <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
-      <div style="position: relative">
-        <img src="/project/gauss-image/output1.png" width="720" height="434" alt="" class="featured-image">
-      </div>
-    </div>
+            B, N, C = x.shape
+            
+            qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+            q, k, v = qkv[0], qkv[1], qkv[2]
     
-    <h5>High Resolution Image - Neural Net from Scratch</h5>
-
-    <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
-      <div style="position: relative">
-        <img src="/project/gauss-image/output2.png" width="720" height="434" alt="" class="featured-image">
-      </div>
-    </div>
-
-    <h5>High Resolution Lion - PyTorch Neural Net</h5>
-
-    <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
-      <div style="position: relative">
-        <img src="/project/gauss-image/output3.png" width="720" height="434" alt="" class="featured-image">
-      </div>
-    </div>
-
-    <h5>High Resolution Tiger - PyTorch Neural Net</h5>
-
-    <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 434px;">
-      <div style="position: relative">
-        <img src="/project/gauss-image/output4.png" width="720" height="434" alt="" class="featured-image">
-      </div>
-    </div>
+            attn = (q @ k.transpose(-2, -1)) * self.scale
+            attn = attn.softmax(dim=-1)
+            attn = self.attn_drop(attn)
+    
+            x = (attn @ v).transpose(1, 2).reshape(B, N, C)
+            x = self.proj(x)
+            x = self.proj_drop(x)
+            return x, attn
+    </code></pre> -->
+    
     
 
 
