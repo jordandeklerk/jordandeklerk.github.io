@@ -967,7 +967,7 @@ def permute(
       <p>Let's define the <code>ConstantLengthDataset</code>, an Iterable dataset that will return constant-length chunks of tokens. To do so, we'll read a buffer of text from the original dataset until we hit the size limits and then apply tokenizer to convert the raw text into tokenized inputs. Optionally, we'll perform FIM transformations on some sequences (the proportion of sequences affected is controlled by <code>fim_rate</code>).</p>
       <p>Once defined, we can create instances of the <code>ConstantLengthDataset</code> from both training and validation data.</p>
 
-      <pre><code class="language-python">from torch.utils.data import IterableDataset
+      <pre style="text-align: left;"><code class="language-python">from torch.utils.data import IterableDataset
         from torch.utils.data.dataloader import DataLoader
         import random
         
@@ -1069,7 +1069,13 @@ def permute(
                 fim_rate=FIM_RATE,
                 fim_spm_rate=FIM_SPM_RATE,
                 seed=SEED,
-        )</code></pre>
+        )
+  </code></pre>
+
+  <h2>Prepare the model</h2>
+
+
+
         
       
 
