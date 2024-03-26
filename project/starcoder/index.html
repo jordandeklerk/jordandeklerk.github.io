@@ -919,7 +919,7 @@ def chars_token_ratio(dataset, tokenizer, data_column, nb_examples=400):
 
 chars_per_token = chars_token_ratio(train_data, tokenizer, DATA_COLUMN)
 print(f"The character to token ratio of the dataset is: {chars_per_token:.2f}")
-</code>c</pre>
+</code></pre>
     <p>The character-to-token ratio can also be used as an indicator of the quality of text tokenization. For instance, a character-to-token ratio of 1.0 would mean that each character is represented with a token, which is not very meaningful. This would indicate poor tokenization. In standard English text, one token is typically equivalent to approximately four characters, meaning the character-to-token ratio is around 4.0. We can expect a lower ratio in the code dataset, but generally speaking, a number between 2.0 and 3.5 can be considered good enough.</p>
     
     <p><strong>Optional FIM transformations</strong></p>
