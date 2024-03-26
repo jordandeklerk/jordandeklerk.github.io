@@ -828,13 +828,13 @@
     <p>Our fine-tuning efforts will be centered around the <a href="https://huggingface.co/bigcode/starcoder2-3b"><code>bigcode/starcoder2-3b</code></a> model. This model boasts 3 billion parameters and has been trained across 17 programming languages from The Stack v2 dataset, excluding any opt-out submissions. It utilizes Grouped Query Attention with a significant context window of 16,384 tokens, supplemented by a 4,096 token sliding window for attention, and was developed through a Fill-in-the-Middle training objective over more than 3 trillion tokens. Access to this model is restricted, so ensure you have permission by visiting the model's Hugging Face page and logging into your account.</p>
     <pre><code class="language-python">
 from huggingface_hub import notebook_login
-
 notebook_login()
     </code></pre>
     <p>Install all the necessary libraries. In addition to <code>transformers</code> and <code>datasets</code>, we'll be using <code>peft</code>, <code>bitsandbytes</code>, and <code>flash-attn</code> to optimize the training.</p>
     <p>By employing parameter-efficient training techniques, we can run this notebook on a single A100 High-RAM GPU.</p>
-    <pre><code class="language-python">!pip install -q git+https://github.com/huggingface/transformers.git
-     !pip install -q datasets peft bitsandbytes flash-attn fire gradio
+    <pre><code class="language-python">
+!pip install -q git+https://github.com/huggingface/transformers.git
+!pip install -q datasets peft bitsandbytes flash-attn fire gradio
     </code></pre>
     <p>Let's define some global variables.</p>
     <pre><code class="language-python">
@@ -855,7 +855,7 @@ NUM_WARMUP_STEPS=30              # num_warmup_steps
 EVAL_FREQ=100                    # eval_freq
 SAVE_FREQ=100                    # save_freq
 LOG_FREQ
-
+</code></pre>
 
 
             
