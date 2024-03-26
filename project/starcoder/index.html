@@ -822,24 +822,21 @@
       <p>In our case study, we selected the ten most popular public repositories from Hugging Face on GitHub as our training data. We've filtered out any non-code elements, including images, audio files, and slides, retaining only the code segments within Jupyter notebooks. This curated dataset, which includes repository ID, file paths, and code contents, is accessible on the Hugging Face Hub at <a href="https://huggingface.co/datasets/smangrul/hf-stack-v1"><code>smangrul/hf-stack-v1</code></a>.</p>
       <h2>The Model</h2>
       <p>Our fine-tuning efforts will be centered around the <a href="https://huggingface.co/bigcode/starcoder2-3b"><code>bigcode/starcoder2-3b</code></a> model. This model boasts 3 billion parameters and has been trained across 17 programming languages from The Stack v2 dataset, excluding any opt-out submissions. It utilizes Grouped Query Attention with a significant context window of 16,384 tokens, supplemented by a 4,096 token sliding window for attention, and was developed through a Fill-in-the-Middle training objective over more than 3 trillion tokens. Access to this model is restricted, so ensure you have permission by visiting the model's Hugging Face page and logging into your account.</p>
-      <pre><code>&lt;script&gt;
+      <pre><code class="language-python">
         from huggingface_hub import notebook_login
         
         notebook_login()
-        &lt;/script&gt;
         </code></pre>
       <p>Install all the necessary libraries. In addition to <code>transformers</code> and <code>datasets</code>, we'll be using <code>peft</code>, <code>bitsandbytes</code>, and <code>flash-attn</code> to optimize the training.</p>
       <p>By employing parameter-efficient training techniques, we can run this notebook on a single A100 High-RAM GPU.</p>
-      <pre><code>&lt;script&gt;
+      <pre><code class="language-python">
         !pip install -q git+https://github.com/huggingface/transformers.git
-        &lt;/script&gt;
         </code></pre>
-      <pre><code>&lt;script&gt;
+        <pre><code class="language-python">
           !pip install -q datasets peft bitsandbytes flash-attn fire gradio
-          &lt;/script&gt;
         </code></pre>
         <p>Let's define some global variables.</p>
-        <pre><code>&lt;script&gt;
+        <pre><code class="language-python">
           MODEL="bigcode/starcoder2-3b"    # Model checkpoint on the Hugging Face Hub
           DATASET="smangrul/hf-stack-v1"   # Dataset on the Hugging Face Hub
           DATA_COLUMN="content"            # Column name containing the code content
@@ -876,8 +873,25 @@
           BNB_4BIT_COMPUTE_DTYPE="bfloat16"# bnb_4bit_compute_dtype
           
           SEED=315
-          &lt;/script&gt;
           </code></pre>
+
+          <pre><code class="language-python">
+            from transformers import (
+                AutoModelForCausalLM,
+                AutoTokenizer,
+                Trainer,
+                TrainingArguments,
+                logging,
+                set_seed,
+                BitsAndBytesConfig,
+            )
+            
+            set_seed(SEED)
+            </code></pre>
+
+            <h2>Prepare the data</h2>
+
+            
           
 
                   
