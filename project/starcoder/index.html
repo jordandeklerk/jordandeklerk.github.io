@@ -810,109 +810,52 @@
 </div>
 
 
-  <div class="article-container">
+<div class="article-container">
+  <div class="article-style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <h1>Enhancing Code LLMs for Organizational Use with Single GPU Fine-tuning</h1>
+    <p><em>Created by: <a href="https://github.com/jordandeklerk">Jordan Deklerk</a>, <a href="https://jordandeklerk.github.io">Visit My Website</a></em></p>
+    <p>While general-purpose code-generating Large Language Models (LLMs) like Codex, StarCoder, and Code Llama can produce code in line with broad programming standards and syntax, they might not fully capture the specific coding practices or recognize the unique libraries used within a particular organization.</p>
+    <p>This guide demonstrates the process of refining a code-generating LLM using your organization's proprietary code to better align with internal coding standards and leverage specialized libraries. Given the substantial size of these models, traditional fine-tuning approaches can be excessively demanding on computational resources. However, we'll introduce techniques to effectively fine-tune these models on just a single GPU, ensuring a more practical approach for resource-limited environments.</p>
+    
+    <h2>Data Preparation</h2>
+    <p>In our case study, we selected the ten most popular public repositories from Hugging Face on GitHub as our training data. We've filtered out any non-code elements, including images, audio files, and slides, retaining only the code segments within Jupyter notebooks. This curated dataset, which includes repository ID, file paths, and code contents, is accessible on the Hugging Face Hub at <a href="https://huggingface.co/datasets/smangrul/hf-stack-v1"><code>smangrul/hf-stack-v1</code></a>.</p>
+    
+    <h2>The Model</h2>
+    <p>Our fine-tuning efforts will be centered around the <a href="https://huggingface.co/bigcode/starcoder2-3b"><code>bigcode/starcoder2-3b</code></a> model. This model boasts 3 billion parameters and has been trained across 17 programming languages from The Stack v2 dataset, excluding any opt-out submissions. It utilizes Grouped Query Attention with a significant context window of 16,384 tokens, supplemented by a 4,096 token sliding window for attention, and was developed through a Fill-in-the-Middle training objective over more than 3 trillion tokens. Access to this model is restricted, so ensure you have permission by visiting the model's Hugging Face page and logging into your account.</p>
+    <pre><code class="language-python">
+from huggingface_hub import notebook_login
 
-    <div class="article-style">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script>
-      
-      <h1>Enhancing Code LLMs for Organizational Use with Single GPU Fine-tuning</h1>
-      <p><em>Created by: <a href="https://github.com/jordandeklerk">Jordan Deklerk</a>, <a href="https://jordandeklerk.github.io">Visit My Website</a></em></p>
-      <p>While general-purpose code-generating Large Language Models (LLMs) like Codex, StarCoder, and Code Llama can produce code in line with broad programming standards and syntax, they might not fully capture the specific coding practices or recognize the unique libraries used within a particular organization.</p>
-      <p>This guide demonstrates the process of refining a code-generating LLM using your organization's proprietary code to better align with internal coding standards and leverage specialized libraries. Given the substantial size of these models, traditional fine-tuning approaches can be excessively demanding on computational resources. However, we'll introduce techniques to effectively fine-tune these models on just a single GPU, ensuring a more practical approach for resource-limited environments.</p>
-      <h2>Data Preparation</h2>
-      <p>In our case study, we selected the ten most popular public repositories from Hugging Face on GitHub as our training data. We've filtered out any non-code elements, including images, audio files, and slides, retaining only the code segments within Jupyter notebooks. This curated dataset, which includes repository ID, file paths, and code contents, is accessible on the Hugging Face Hub at <a href="https://huggingface.co/datasets/smangrul/hf-stack-v1"><code>smangrul/hf-stack-v1</code></a>.</p>
-      <h2>The Model</h2>
-      <p>Our fine-tuning efforts will be centered around the <a href="https://huggingface.co/bigcode/starcoder2-3b"><code>bigcode/starcoder2-3b</code></a> model. This model boasts 3 billion parameters and has been trained across 17 programming languages from The Stack v2 dataset, excluding any opt-out submissions. It utilizes Grouped Query Attention with a significant context window of 16,384 tokens, supplemented by a 4,096 token sliding window for attention, and was developed through a Fill-in-the-Middle training objective over more than 3 trillion tokens. Access to this model is restricted, so ensure you have permission by visiting the model's Hugging Face page and logging into your account.</p>
-      <pre><code class="language-python">
-        from huggingface_hub import notebook_login
-        
-        notebook_login()
-        </code></pre>
-      <p>Install all the necessary libraries. In addition to <code>transformers</code> and <code>datasets</code>, we'll be using <code>peft</code>, <code>bitsandbytes</code>, and <code>flash-attn</code> to optimize the training.</p>
-      <p>By employing parameter-efficient training techniques, we can run this notebook on a single A100 High-RAM GPU.</p>
-      <pre><code class="language-python"> !pip install -q git+https://github.com/huggingface/transformers.git
-        </code></pre>
-        <pre><code class="language-python">!pip install -q datasets peft bitsandbytes flash-attn fire gradio
-        </code></pre>
-        <p>Let's define some global variables.</p>
-        <pre><code class="language-python">
-          MODEL="bigcode/starcoder2-3b"    # Model checkpoint on the Hugging Face Hub
-          DATASET="smangrul/hf-stack-v1"   # Dataset on the Hugging Face Hub
-          DATA_COLUMN="content"            # Column name containing the code content
-          
-          SEQ_LENGTH=2048                  # Sequence length
-          
-          # Training arguments
-          MAX_STEPS=2000                   # max_steps
-          BATCH_SIZE=8                     # batch_size
-          GR_ACC_STEPS=1                   # gradient_accumulation_steps
-          LR=5e-4                          # learning_rate
-          LR_SCHEDULER_TYPE="cosine"       # lr_scheduler_type
-          WEIGHT_DECAY=0.01                # weight_decay
-          NUM_WARMUP_STEPS=30              # num_warmup_steps
-          EVAL_FREQ=100                    # eval_freq
-          SAVE_FREQ=100                    # save_freq
-          LOG_FREQ=25                      # log_freq
-          OUTPUT_DIR="peft-starcoder2-3b-lora-a100" # output_dir
-          BF16=True                        # bf16
-          FP16=False                       # no_fp16
-          
-          # FIM trasformations arguments
-          FIM_RATE=0.5                     # fim_rate
-          FIM_SPM_RATE=0.5                 # fim_spm_rate
-          
-          # LORA
-          LORA_R=8                         # lora_r
-          LORA_ALPHA=32                    # lora_alpha
-          LORA_DROPOUT=0.0                 # lora_dropout
-          LORA_TARGET_MODULES="c_proj,c_attn,q_attn,c_fc,c_proj"    # lora_target_modules
-          
-          # bitsandbytes config
-          USE_NESTED_QUANT=True            # use_nested_quant
-          BNB_4BIT_COMPUTE_DTYPE="bfloat16"# bnb_4bit_compute_dtype
-          
-          SEED=315
-          </code></pre>
+notebook_login()
+    </code></pre>
+    <p>Install all the necessary libraries. In addition to <code>transformers</code> and <code>datasets</code>, we'll be using <code>peft</code>, <code>bitsandbytes</code>, and <code>flash-attn</code> to optimize the training.</p>
+    <p>By employing parameter-efficient training techniques, we can run this notebook on a single A100 High-RAM GPU.</p>
+    <pre><code class="language-python">!pip install -q git+https://github.com/huggingface/transformers.git
+     !pip install -q datasets peft bitsandbytes flash-attn fire gradio
+    </code></pre>
+    <p>Let's define some global variables.</p>
+    <pre><code class="language-python">
+MODEL="bigcode/starcoder2-3b"    # Model checkpoint on the Hugging Face Hub
+DATASET="smangrul/hf-stack-v1"   # Dataset on the Hugging Face Hub
+DATA_COLUMN="content"            # Column name containing the code content
 
-          <pre><code class="language-python">
-            from transformers import (
-                AutoModelForCausalLM,
-                AutoTokenizer,
-                Trainer,
-                TrainingArguments,
-                logging,
-                set_seed,
-                BitsAndBytesConfig,
-            )
-            
-            set_seed(SEED)
-            </code></pre>
+SEQ_LENGTH=2048                  # Sequence length
 
-            <h2>Prepare the data</h2>
-            <p>The dataset is likely to be quite large, make sure to enable the streaming mode. Streaming allows us to load the data progressively as we iterate over the dataset instead of downloading the whole dataset at once.</p>
-            <p>We'll reserve the first 4000 examples as the validation set, and everything else will be the training data.</p>
-            <pre><code class="language-python">from datasets import load_dataset
-              import torch
-              from tqdm import tqdm
-              
-              
-              dataset = load_dataset(
-                  DATASET,
-                  data_dir="data",
-                  split="train",
-                  streaming=True,
-              )
-              
-              valid_data = dataset.take(4000)
-              train_data = dataset.skip(4000)
-              train_data = train_data.shuffle(buffer_size=5000, seed=SEED)
-              </code></pre>        
-              
-              <p>At this step, the dataset still contains raw data with code of arbitrary length. For training, we need inputs of fixed length. Let's create an Iterable dataset that would return constant-length chunks of tokens from a stream of text files.</p>
-              <p>First, let's estimate the average number of characters per token in the dataset, which will help us later estimate the number of tokens in the text buffer later. By default, we'll only take 400 examples (<code>nb_examples</code>) from the dataset. Using only a subset of the entire dataset will reduce computational cost while still providing a reasonable estimate of the overall character-to-token ratio.</p>
-              
+# Training arguments
+MAX_STEPS=2000                   # max_steps
+BATCH_SIZE=8                     # batch_size
+GR_ACC_STEPS=1                   # gradient_accumulation_steps
+LR=5e-4                          # learning_rate
+LR_SCHEDULER_TYPE="cosine"       # lr_scheduler_type
+WEIGHT_DECAY=0.01                # weight_decay
+NUM_WARMUP_STEPS=30              # num_warmup_steps
+EVAL_FREQ=100                    # eval_freq
+SAVE_FREQ=100                    # save_freq
+LOG_FREQ
+
 
 
             
