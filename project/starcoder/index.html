@@ -813,6 +813,9 @@
   <div class="article-container">
 
     <div class="article-style">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
       
       <h1>Enhancing Code LLMs for Organizational Use with Single GPU Fine-tuning</h1>
       <p><em>Created by: <a href="https://github.com/jordandeklerk">Jordan Deklerk</a>, <a href="https://jordandeklerk.github.io">Visit My Website</a></em></p>
@@ -829,11 +832,9 @@
         </code></pre>
       <p>Install all the necessary libraries. In addition to <code>transformers</code> and <code>datasets</code>, we'll be using <code>peft</code>, <code>bitsandbytes</code>, and <code>flash-attn</code> to optimize the training.</p>
       <p>By employing parameter-efficient training techniques, we can run this notebook on a single A100 High-RAM GPU.</p>
-      <pre><code class="language-python">
-        !pip install -q git+https://github.com/huggingface/transformers.git
+      <pre><code class="language-python"> !pip install -q git+https://github.com/huggingface/transformers.git
         </code></pre>
-        <pre><code class="language-python">
-          !pip install -q datasets peft bitsandbytes flash-attn fire gradio
+        <pre><code class="language-python">!pip install -q datasets peft bitsandbytes flash-attn fire gradio
         </code></pre>
         <p>Let's define some global variables.</p>
         <pre><code class="language-python">
@@ -890,6 +891,25 @@
             </code></pre>
 
             <h2>Prepare the data</h2>
+            <p>The dataset is likely to be quite large, make sure to enable the streaming mode. Streaming allows us to load the data progressively as we iterate over the dataset instead of downloading the whole dataset at once.</p>
+            <p>We'll reserve the first 4000 examples as the validation set, and everything else will be the training data.</p>
+            <pre><code class="language-python">from datasets import load_dataset
+              import torch
+              from tqdm import tqdm
+              
+              
+              dataset = load_dataset(
+                  DATASET,
+                  data_dir="data",
+                  split="train",
+                  streaming=True,
+              )
+              
+              valid_data = dataset.take(4000)
+              train_data = dataset.skip(4000)
+              train_data = train_data.shuffle(buffer_size=5000, seed=SEED)
+              </code></pre>              
+
 
             
           
