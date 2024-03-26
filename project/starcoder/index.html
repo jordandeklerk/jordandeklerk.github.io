@@ -908,7 +908,11 @@
               valid_data = dataset.take(4000)
               train_data = dataset.skip(4000)
               train_data = train_data.shuffle(buffer_size=5000, seed=SEED)
-              </code></pre>              
+              </code></pre>        
+              
+              <p>At this step, the dataset still contains raw data with code of arbitrary length. For training, we need inputs of fixed length. Let's create an Iterable dataset that would return constant-length chunks of tokens from a stream of text files.</p>
+              <p>First, let's estimate the average number of characters per token in the dataset, which will help us later estimate the number of tokens in the text buffer later. By default, we'll only take 400 examples (<code>nb_examples</code>) from the dataset. Using only a subset of the entire dataset will reduce computational cost while still providing a reasonable estimate of the overall character-to-token ratio.</p>
+              
 
 
             
