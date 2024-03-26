@@ -1100,18 +1100,160 @@ eval_dataset = ConstantLengthDataset(
 
   <h2>Prepare the model</h2>
 
+      <p>Now that the data is prepared, it's time to load the model! We're going to load the quantized version of the model.</p>
+      <p>This will allow us to reduce memory usage, as quantization represents data with fewer bits. We'll use the <code>bitsandbytes</code> library to quantize the model, as it has a nice integration with <code>transformers</code>. All we need to do is define a <code>bitsandbytes</code> config, and then use it when loading the model.</p>
+      <p>There are different variants of 4bit quantization, but generally, we recommend using NF4 quantization for better performance (<code>bnb_4bit_quant_type="nf4"</code>).</p>
+      <p>The <code>bnb_4bit_use_double_quant</code> option adds a second quantization after the first one to save an additional 0.4 bits per parameter.</p>
+      <p>Once defined, pass the config to the <code>from_pretrained</code> method to load the quantized version of the model.</p>
 
+      <pre><code class="language-python">from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+from peft.tuners.lora import LoraLayer
+
+load_in_8bit = False
+
+# 4-bit quantization
+compute_dtype = getattr(torch, BNB_4BIT_COMPUTE_DTYPE)
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=compute_dtype,
+    bnb_4bit_use_double_quant=USE_NESTED_QUANT,
+)
+
+device_map = {"": 0}
+
+model = AutoModelForCausalLM.from_pretrained(
+        MODEL,
+        load_in_8bit=load_in_8bit,
+        quantization_config=bnb_config,
+        device_map=device_map,
+        use_cache=False,  # We will be using gradient checkpointing
+        trust_remote_code=True,
+        attn_implementation="flash_attention_2",
+)
+
+  </code></pre>
+
+      <p>When using a quantized model for training, you need to call the <code>prepare_model_for_kbit_training()</code> function to preprocess the quantized model for training.</p>
+      <pre><code class="language-python">model = prepare_model_for_kbit_training(model)
+  </code></pre>
+      <p>Now that the quantized model is ready, we can set up a LoRA configuration. LoRA makes fine-tuning more efficient by drastically reducing the number of trainable parameters. To train a model using LoRA technique, we need to wrap the base model as a <code>PeftModel</code>. This involves definign LoRA configuration with <code>LoraConfig</code>, and wrapping the original model with <code>get_peft_model()</code> using the <code>LoraConfig</code>.</p>
+      <pre><code class="language-python"># Set up lora
+peft_config = LoraConfig(
+    lora_alpha=LORA_ALPHA,
+    lora_dropout=LORA_DROPOUT,
+    r=LORA_R,
+    bias="none",
+    task_type="CAUSAL_LM",
+    target_modules=LORA_TARGET_MODULES.split(","),
+)
+
+model = get_peft_model(model, peft_config)
+model.print_trainable_parameters()
+
+  </code></pre>
+      <p>As you can see, by applying LoRA technique we will now need to train less than 1% of the parameters.</p>
+
+  <h2>Train the Model</h2>
+      <p>Now that we have prepared the data, and optimized the model, we are ready to bring everything together to start the training.</p>
+      <p>To instantiate a <code>Trainer</code>, you need to define the training configuration. The most important is the <code>TrainingArguments</code>, which is a class that contains all the attributes to configure the training.</p>
+      <pre><code class="language-python">train_data.start_iteration = 0
+
+training_args = TrainingArguments(
+    output_dir=f"jdeklerk10/{OUTPUT_DIR}",
+    dataloader_drop_last=True,
+    evaluation_strategy="steps",
+    save_strategy="steps",
+    max_steps=MAX_STEPS,
+    eval_steps=EVAL_FREQ,
+    save_steps=SAVE_FREQ,
+    logging_steps=LOG_FREQ,
+    per_device_train_batch_size=BATCH_SIZE,
+    per_device_eval_batch_size=BATCH_SIZE,
+    learning_rate=LR,
+    lr_scheduler_type=LR_SCHEDULER_TYPE,
+    warmup_steps=NUM_WARMUP_STEPS,
+    gradient_accumulation_steps=GR_ACC_STEPS,
+    gradient_checkpointing=True,
+    fp16=FP16,
+    bf16=BF16,
+    weight_decay=WEIGHT_DECAY,
+    push_to_hub=True,
+    include_tokens_per_second=True,
+    use_reentrant=True
+)
+  </code></pre>
+      <p>As a final step, instantiate the <code>Trainer</code> and call the <code>train</code> method.</p>
+      <pre><code class="language-python">trainer = Trainer(
+    model=model, args=training_args, train_dataset=train_dataset, eval_dataset=eval_dataset
+)
+
+print("Training...")
+trainer.train()
+  </code></pre>
+      <p>Finally, you can push the fine-tuned model to your Hub repository to share with your team.</p>
+      <pre><code class="language-python">trainer.push_to_hub()
+  </code></pre>
+
+  <h2>Inference</h2>
+      <p>## Inference
+
+        Once the model is uploaded to Hub, we can use it for inference. To do so we first initialize the original base model and its tokenizer. Next, we need to merge the fine-tuned weights with the base model.</p>
+      <pre><code class="language-python">from peft import PeftModel
+import torch
+
+# load the original model first
+tokenizer = AutoTokenizer.from_pretrained(MODEL, trust_remote_code=True)
+base_model = AutoModelForCausalLM.from_pretrained(
+    MODEL,
+    quantization_config=None,
+    device_map=None,
+    trust_remote_code=True,
+    torch_dtype=torch.bfloat16,
+).cuda()
+
+# merge fine-tuned weights with the base model
+peft_model_id = f"jdeklerk10/{OUTPUT_DIR}"
+model = PeftModel.from_pretrained(base_model, peft_model_id)
+model.merge_and_unload()
+  </code></pre>
+      <p>Now we can use the merged model for inference. For convenience, we'll define a <code>get_code_completion</code>.</p>
+      <pre><code class="language-python">def get_code_completion(prefix, suffix):
+    text = prompt = f"""<fim_prefix>{prefix}<fim_suffix>{suffix}<fim_middle>"""
+    model.eval()
+    outputs = model.generate(
+        input_ids=tokenizer(text, return_tensors="pt").input_ids.cuda(),
+        max_new_tokens=128,
+        temperature=0.2,
+        top_k=50,
+        top_p=0.95,
+        do_sample=True,
+        repetition_penalty=1.0,
+    )
+    return tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+  </code></pre>
+      <p>Now all we need to do to get code completion is call the <code>get_code_complete</code> function and pass the first few lines that we want to be completed as a prefix, and an empty string as a suffix.</p>
+      <pre><code class="language-python">prefix = """from peft import LoraConfig, TaskType, get_peft_model
+from transformers import AutoModelForCausalLM
+peft_config = LoraConfig(
+"""
+suffix =""""""
+
+print(get_code_completion(prefix, suffix))
+  </code></pre>
+      <p>If you go back to the cell where we instantiate the model for inference, and comment out the lines where we merge the fine-tuned weights, you can see what the original model would've generated for the exact same prefix</p>
+  
+  <h2>Conclusion</h2>
+      <p>By following this guide, you've learned how to fine-tune a code-generating LLM to better align with your organization's coding standards and libraries. This process can significantly enhance the model's ability to generate code that is more in line with your organization's practices, making it a valuable asset for your team.</p>
+      <p>For more information on fine-tuning LLMs, check out the <a href="https://huggingface.co/transformers/training.html">Hugging Face documentation</a>.</p>
+  
 
         
       
 
 
-            
-          
-
-                  
-    
-
+  
 
     </div>
 
