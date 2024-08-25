@@ -60,7 +60,7 @@
   {
     "id": 8,
     "name": "Gaussian-Image",
-    "image": "/gaussian2.png",
+    "image": "/gauss.png",
     "description": "This project is based on a deep learning for computer vision course at UIUC where we will implement multi-layer neural networks and backpropagation from scratch to “memorize” an image, and we will write our own forward and backward pass and train a four-layer network with SGD and Adam optimizers",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/Gaussian-Image"
