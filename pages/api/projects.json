@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "EHR-BERT",
-    "image": "/blog-images/ehr-bert.png",
+    "image": "/transformers.png",
     "description": "BERT style transformer model on CMS synthetic EHR data for diagnosis and procedure prediction in PyTorch",
     "tags": ["python", "pytorch", "numpy", "git", "wandb"],
     "source_code": "https://github.com/jordandeklerk/EHR-BERT",
@@ -27,14 +27,6 @@
   },
   {
     "id": 4,
-    "name": "VSCode Website",
-    "image": "/vscode.gif",
-    "description": "A personal website built with javascript, next.js, and css",
-    "tags": ["javascript", "css", "git"],
-    "source_code": "https://github.com/jordandeklerk/jordandeklerk.github.io"
-  },
-  {
-    "id": 5,
     "name": "ViT",
     "image": "/vit.gif",
     "description": "First attempt at implementing a vision transformer model in PyTorch on CIFAR-10 for image classification",
@@ -42,15 +34,15 @@
     "source_code": "https://github.com/jordandeklerk/ViT"
   },
   {
-    "id": 6,
+    "id": 5,
     "name": "developerFolio",
     "image": "/website.gif",
-    "description": "A personal website to showcase machine learning projects and tutorials built with react and javascript (old website)",
+    "description": "A personal website to showcase machine learning projects and tutorials built with react and javascript",
     "tags": ["react", "javascript", "html", "css", "git"],
     "source_code": "https://github.com/jordandeklerk/developerFolio"
   },
   {
-    "id": 7,
+    "id": 6,
     "name": "ml-tutorials",
     "image": "/tutorials2.png",
     "description": "A website to provide in-depth project implementations with code written in typescript, javascript, and python",
@@ -58,7 +50,7 @@
     "source_code": "https://github.com/jordandeklerk/ml-tutorials/tree/main"
   },
   {
-    "id": 8,
+    "id": 7,
     "name": "Gaussian-Image",
     "image": "/gauss.png",
     "description": "This project is based on a deep learning for computer vision course at UIUC where we will implement multi-layer neural networks and backpropagation from scratch to “memorize” an image, and we will write our own forward and backward pass and train a four-layer network with SGD and Adam optimizers",
@@ -66,7 +58,7 @@
     "source_code": "https://github.com/jordandeklerk/Gaussian-Image"
   },
   {
-    "id": 9,
+    "id": 8,
     "name": "OpenCodeInterpreter-Finetune-SQL",
     "image": "/blog-images/opencode2.png",
     "description": "Fine-tuning coding LLM OpenCodeInterpreter-DS-6.7B for Text-to-SQL code generation on a single A100 GPU with Huggingface",
@@ -75,7 +67,7 @@
     "demo": "https://ml-tutorials.netlify.app/blog/open-code/"
   },
   {
-    "id": 10,
+    "id": 9,
     "name": "Starcoder2-Finetune-Code-Completion",
     "image": "/starcoder.png",
     "description": "Finetuning Starcoder2-3B, a coding LLM, for code completion on a single A100 GPU with Huggingface",
