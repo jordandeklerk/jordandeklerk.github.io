@@ -6,19 +6,18 @@ const CustomHead = ({ title }) => {
       <title>{title}</title>
       <meta
         name="description"
-        content="Nitin Ranganath is an avid full stack web developer building websites and applications you'd love to use"
+        content="Jordan Deklerk is a senior data scientist at DICK's Sporting Goods building machine learning models to improve the customer experience"
       />
       <meta
         name="keywords"
-        content="nitin ranganath, nitin, ranganath, web developer portfolio, nitin web developer, nitin developer, mern stack, nitin ranganath portfolio, vscode-portfolio"
+        content="jordan deklerk, jordan, deklerk, data scientist portfolio, jordan deklerk portfolio, dicks sporting goods, dicks, sporting goods, machine learning, data science"
       />
-      <meta property="og:title" content="Nitin Ranganath's Portfolio" />
+      <meta property="og:title" content="Jordan Deklerk's Portfolio" />
       <meta
         property="og:description"
-        content="A full-stack developer building websites that you'd like to use."
+        content="A senior data scientist at DICK's Sporting Goods building machine learning models to improve the customer experience"
       />
-      <meta property="og:image" content="https://imgur.com/4zi5KkQ.png" />
-      <meta property="og:url" content="https://vscode-portfolio.vercel.app" />
+      <meta property="og:url" content="https://jordandeklerk.com" />
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
   );
@@ -27,5 +26,5 @@ const CustomHead = ({ title }) => {
 export default CustomHead;
 
 CustomHead.defaultProps = {
-  title: 'Nitin Ranganath',
+  title: 'Jordan Deklerk',
 };
