@@ -4,7 +4,7 @@
     "name": "EHR-BERT",
     "image": "/transformers.png",
     "description": "BERT style transformer model on CMS synthetic EHR data for diagnosis and procedure prediction in PyTorch",
-    "tags": ["python", "pytorch", "numpy", "git", "wandb"],
+    "tags": ["python", "pytorch", "git"],
     "source_code": "https://github.com/jordandeklerk/EHR-BERT",
     "demo": "https://ml-tutorials.netlify.app/blog/ehr-bert/"
   },
@@ -13,7 +13,7 @@
     "name": "Amortized-Bayes",
     "image": "/vae.png",
     "description": "Implementing Bayesian neural networks to close the amortization gap in VAEs in PyTorch",
-    "tags": ["python", "pytorch", "numpy", "git"],
+    "tags": ["python", "pytorch", "git"],
     "source_code": "https://github.com/jordandeklerk/amortized-bayes",
     "demo": "https://ml-tutorials.netlify.app/blog/amortized-bayes/"
   },
@@ -22,7 +22,7 @@
     "name": "SwinVIT",
     "image": "/swin2.jpg",
     "description": "Implementing a modified Swin Transformer model in PyTorch on CIFAR-10 for image classification",
-    "tags": ["python", "pytorch", "numpy", "git", "wandb"],
+    "tags": ["python", "pytorch", "git"],
     "source_code": "https://github.com/jordandeklerk/SwinVIT"
   },
   {
@@ -38,7 +38,7 @@
     "name": "ViT",
     "image": "/vit.gif",
     "description": "First attempt at implementing a vision transformer model in PyTorch on CIFAR-10 for image classification",
-    "tags": ["python", "pytorch", "numpy", "git"],
+    "tags": ["python", "pytorch", "git"],
     "source_code": "https://github.com/jordandeklerk/ViT"
   },
   {
@@ -70,7 +70,7 @@
     "name": "OpenCodeInterpreter-Finetune-SQL",
     "image": "/blog-images/opencode2.png",
     "description": "Fine-tuning coding LLM OpenCodeInterpreter-DS-6.7B for Text-to-SQL code generation on a single A100 GPU with Huggingface",
-    "tags": ["python", "huggingface", "git", "wandb"],
+    "tags": ["python", "huggingface", "git"],
     "source_code": "https://github.com/jordandeklerk/OpenCodeInterpreter-Finetune-SQL",
     "demo": "https://ml-tutorials.netlify.app/blog/open-code/"
   },
@@ -79,7 +79,7 @@
     "name": "Starcoder2-Finetune-Code-Completion",
     "image": "/starcoder.png",
     "description": "Finetuning Starcoder2-3B, a coding LLM, for code completion on a single A100 GPU with Huggingface",
-    "tags": ["python", "huggingface", "git", "wandb"],
+    "tags": ["python", "huggingface", "git"],
     "source_code": "https://github.com/jordandeklerk/Starcoder2-Finetune-Code-Completion"
   }
 ]
