@@ -15,8 +15,10 @@ const FloatingIcons = ({ icons }) => {
       const vx = Math.cos(angle) * speed;
       const vy = Math.sin(angle) * speed;
 
+      // Set initial random position
       let x = Math.random() * (container.offsetWidth - icon.offsetWidth);
       let y = Math.random() * (container.offsetHeight - icon.offsetHeight);
+      icon.style.transform = `translate(${x}px, ${y}px)`;
 
       const move = () => {
         x += vx;
