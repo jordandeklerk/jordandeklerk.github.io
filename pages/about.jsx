@@ -67,7 +67,7 @@ const AboutPage = () => {
           <div className={styles.introText}>
             <h2></h2>
             <p className={styles.introParagraph}>
-              Hi! I'm Jordan. I'm a Senior Data Scientist at DICK's Sporting Goods on the media team working on Bayesian media mix modeling and reinforcement learning.
+              Hi, I'm Jordan. I'm a Senior Data Scientist at DICK's Sporting Goods on the media and marketing science team currently working on hierarchical Bayesian media mix modeling.
             </p>
             <p className={styles.introParagraph}>
               Previously, I spent 5 years in the healthcare industry where I've built and deployed transformer models, 
