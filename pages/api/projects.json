@@ -9,11 +9,11 @@
   },
   {
     "id": 2,
-    "name": "BayesFormer",
+    "name": "VarFormer",
     "image": "/bayesformer.png",
     "description": "A probablistic transformer model for deep time series forecasting with RoPE based memory attention (WORK IN PROGRESS)",
     "tags": ["python", "pytorch", "git"],
-    "source_code": "https://github.com/jordandeklerk/BayesFormer"
+    "source_code": "https://github.com/jordandeklerk/VarFormer"
   },
   {
     "id": 3,
