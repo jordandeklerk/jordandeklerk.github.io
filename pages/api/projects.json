@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "name": "PyGRidge",
+    "name": "pyGRidge",
     "image": "/pygridge.png",
     "description": "A scikit-learn compatible Python package for data-driven group regularized ridge regression (WORK IN PROGRESS)",
     "tags": ["python", "numpy", "git"],
-    "source_code": "https://github.com/jordandeklerk/PyGRidge"
+    "source_code": "https://github.com/jordandeklerk/pyGRidge"
   },
   {
     "id": 2,
