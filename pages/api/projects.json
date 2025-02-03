@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "pyloo",
-    "image": "/pyloo.svg",
+    "image": "/pyloo-org.svg",
     "description": "pyloo is an open source Python package that provides tools for Leave-One-Out Cross-Validation (LOO-CV) and Pareto Smoothed Importance Sampling (PSIS) for Bayesian models.",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/pyloo"
