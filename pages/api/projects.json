@@ -1,6 +1,14 @@
 [
   {
     "id": 1,
+    "name": "pyloo",
+    "image": "/pyloo-logo.png",
+    "description": "pyloo is an open source Python implementation of the R package loo. This package provides tools for Leave-One-Out Cross-Validation (LOO-CV) and Pareto Smoothed Importance Sampling (PSIS) for Bayesian models in a framework agnostic way.",
+    "tags": ["python", "numpy", "git"],
+    "source_code": "https://github.com/jordandeklerk/pyloo"
+  },
+  {
+    "id": 2,
     "name": "pyGRidge",
     "image": "/pygridge.png",
     "description": "A scikit-learn compatible Python package for data-driven group regularized ridge regression (WORK IN PROGRESS)",
@@ -8,7 +16,7 @@
     "source_code": "https://github.com/jordandeklerk/pyGRidge"
   },
   {
-    "id": 2,
+    "id": 3,
     "name": "VarFormer",
     "image": "/bayesformer.png",
     "description": "A probablistic transformer model for deep time series forecasting with RoPE based memory attention (WORK IN PROGRESS)",
@@ -16,7 +24,7 @@
     "source_code": "https://github.com/jordandeklerk/VarFormer"
   },
   {
-    "id": 3,
+    "id": 4,
     "name": "EHR-BERT",
     "image": "/transformers.png",
     "description": "BERT style transformer model on CMS synthetic EHR data for diagnosis and procedure prediction in PyTorch",
@@ -25,7 +33,7 @@
     "demo": "https://ml-tutorials.netlify.app/blog/ehr-bert/"
   },
   {
-    "id": 4,
+    "id": 5,
     "name": "Amortized-Bayes",
     "image": "/vae.png",
     "description": "Implementing Bayesian neural networks to close the amortization gap in VAEs in PyTorch",
@@ -34,7 +42,7 @@
     "demo": "https://ml-tutorials.netlify.app/blog/amortized-bayes/"
   },
   {
-    "id": 5,
+    "id": 6,
     "name": "SwinVIT",
     "image": "/swin2.jpg",
     "description": "Implementing a modified Swin Transformer model in PyTorch on CIFAR-10 for image classification",
@@ -42,7 +50,7 @@
     "source_code": "https://github.com/jordandeklerk/SwinVIT"
   },
   {
-    "id": 6,
+    "id": 7,
     "name": "ViT",
     "image": "/vit.gif",
     "description": "First attempt at implementing a vision transformer model in PyTorch on CIFAR-10 for image classification",
@@ -50,7 +58,7 @@
     "source_code": "https://github.com/jordandeklerk/ViT"
   },
   {
-    "id": 7,
+    "id": 8,
     "name": "VSCode Website",
     "image": "/vscode.gif",
     "description": "A personal website built with javascript, next.js, and css",
@@ -58,7 +66,7 @@
     "source_code": "https://github.com/jordandeklerk/jordandeklerk.github.io"
   },
   {
-    "id": 8,
+    "id": 9,
     "name": "ml-tutorials",
     "image": "/tutorials2.png",
     "description": "A website to provide in-depth project implementations with code written in typescript, javascript, and python",
@@ -66,7 +74,7 @@
     "source_code": "https://github.com/jordandeklerk/ml-tutorials/tree/main"
   },
   {
-    "id": 9,
+    "id": 10,
     "name": "Gaussian-Image",
     "image": "/gauss.png",
     "description": "Implementing multi-layer neural networks and backpropagation from scratch to “memorize” an image, and writing our own forward and backward pass to train a four-layer network with SGD and Adam optimizers",
@@ -74,7 +82,7 @@
     "source_code": "https://github.com/jordandeklerk/Gaussian-Image"
   },
   {
-    "id": 10,
+    "id": 11,
     "name": "OpenCodeInterpreter-Finetune-SQL",
     "image": "/blog-images/opencode2.png",
     "description": "Fine-tuning coding LLM OpenCodeInterpreter-DS-6.7B for Text-to-SQL code generation on a single A100 GPU with Huggingface",
@@ -83,7 +91,7 @@
     "demo": "https://ml-tutorials.netlify.app/blog/open-code/"
   },
   {
-    "id": 11,
+    "id": 12,
     "name": "Starcoder2-Finetune-Code-Completion",
     "image": "/starcoder.png",
     "description": "Finetuning Starcoder2-3B, a coding LLM, for code completion on a single A100 GPU with Huggingface",
@@ -91,7 +99,7 @@
     "source_code": "https://github.com/jordandeklerk/Starcoder2-Finetune-Code-Completion"
   },
   {
-    "id": 12,
+    "id": 13,
     "name": "developerFolio",
     "image": "/website.gif",
     "description": "A personal website to showcase machine learning projects and tutorials built with react and javascript (old website)",
