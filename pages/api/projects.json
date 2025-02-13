@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "pyloo",
-    "image": "/pyloo_logo.png",
+    "image": "/pyloo.png",
     "description": "pyloo is a framework-agnostic Python implementation of the R package loo, providing efficient approximate leave-one-out cross-validation (LOO-CV) for fitted Bayesian models.",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/pyloo"
