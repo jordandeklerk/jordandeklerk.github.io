@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "name": "PyLOO",
-    "image": "/pyloo-insta.png",
+    "name": "pyloo",
+    "image": "/pyloo-logo.png",
     "description": "Python package for approximate leave-one-out cross-validation (LOO-CV) and Pareto smoothed importance sampling (PSIS) for Bayesian Modeling",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/pyloo"
