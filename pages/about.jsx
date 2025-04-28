@@ -20,27 +20,18 @@ const AboutPage = () => {
     { name: 'Python', icon: '/python.svg' },
     { name: 'R', icon: '/r.png' },
     { name: 'Pytorch', icon: '/pytorch.svg' },
-    { name: 'Jax', icon: '/jax2.png' },
     { name: 'TensorFlow', icon: '/tensorflow.svg' },
     { name: 'Scikit-learn', icon: '/scikit.svg' },
     { name: 'Numpy', icon: '/numpy.svg' },
     { name: 'Pandas', icon: '/pandas.png' },
     { name: 'Hugging Face', icon: '/hugging.svg' },
-    { name: 'Javascript', icon: '/javascript.svg' },
-    { name: 'Typescript', icon: '/type.png' },
-    { name: 'React', icon: '/reactjs.svg' },
-    { name: 'Node.js', icon: '/nodejs.svg' },
-    { name: 'HTML', icon: '/html5.svg' },
-    { name: 'NPM', icon: '/npm.svg' },
     { name: 'GCP', icon: '/gcp.svg' },
-    { name: 'AWS', icon: '/aws2.svg' },
     { name: 'Azure', icon: '/microsoftazure.svg' },
     { name: 'Kubernetes', icon: '/kubernetes.svg' },
     { name: 'Docker', icon: '/docker2.svg' },
     { name: 'Spark', icon: '/spark.svg' },
     { name: 'Git', icon: '/git.png' },
     { name: 'SQL', icon: '/sql.svg' },
-    { name: 'WandB', icon: '/wandb.svg' },
   ];
 
   const education = [
@@ -70,7 +61,7 @@ const AboutPage = () => {
               Hi, I'm Jordan. I'm a Senior Data Scientist at DICK's Sporting Goods on the media science team currently working on causal inference for retail media and hierarchical Bayesian media mix modeling.
             </p>
             <p className={styles.introParagraph}>
-            Previously, I spent 5 years in the healthcare industry where I built causal inference and deep learning solutions to drive business value.
+            I enjoy creating and contributing to open source software. Currently, I am a developer for arviz-stats, leading the design and optimization of advanced statistical computations for Pareto smoothed importance sampling leave-one-out cross-validation (PSIS-LOO-CV).
             </p>
           </div>
         </div>
