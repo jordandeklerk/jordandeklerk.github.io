@@ -58,7 +58,7 @@ const AboutPage = () => {
           <div className={styles.introText}>
             <h2></h2>
             <p className={styles.introParagraph}>
-              Hi, I'm Jordan. I'm a Senior Data Scientist at DICK's Sporting Goods on the media science team currently working on causal inference for retail media and hierarchical Bayesian media mix modeling.
+              Hi, I'm Jordan. I'm a Senior Data Scientist at DICK's Sporting Goods on the media science team currently working on causal inference for marketing and hierarchical Bayesian media mix modeling.
             </p>
             <p className={styles.introParagraph}>
             I enjoy creating and contributing to open source software. Currently, I am a developer for arviz-stats, leading the design and optimization of advanced statistical computations for Pareto smoothed importance sampling leave-one-out cross-validation (PSIS-LOO-CV).
