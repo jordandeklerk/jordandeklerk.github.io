@@ -5,6 +5,7 @@ const ProjectCard = ({ project }) => {
   const getTagContent = (tag) => {
     const iconMap = {
       python: '/python.svg',
+      xarray: '/xarray.svg',
       pytorch: '/pytorch.svg',
       numpy: '/numpy.svg',
       git: '/git.svg',

@@ -6,34 +6,29 @@ import styles from '../styles/Explorer.module.css';
 
 const explorerItems = [
   {
-    name: 'home.jsx',
+    name: 'home',
     path: '/',
     icon: 'react_icon.svg',
   },
   {
-    name: 'about.html',
+    name: 'about',
     path: '/about',
     icon: 'html_icon.svg',
   },
   {
-    name: 'resume.html',
-    path: '/resume',
-    icon: 'git.png',
-  },
-  {
-    name: 'contact.css',
+    name: 'contact',
     path: '/contact',
     icon: 'yaml.svg',
   },
   {
-    name: 'projects.js',
+    name: 'projects',
     path: '/projects',
     icon: 'python.svg',
   },
   {
-    name: 'articles.json',
-    path: '/articles',
-    icon: 'json_icon.svg',
+    name: 'github',
+    path: '/github',
+    icon: 'github.svg',
   },
 ];
 
