@@ -2,24 +2,48 @@
   {
     "id": 1,
     "name": "arviz-stats",
-    "image": "/arviz.png",
-    "description": "Python package implementing statistical computation and diagnostics for ArviZ",
+    "image": "/ArviZ_fav.svg",
+    "description": "Statistical computations and diagnostics for ArviZ",
     "tags": ["python", "numpy", "xarray", "git"],
     "source_code": "https://github.com/arviz-devs/arviz-stats"
   },
   {
     "id": 2,
+    "name": "arviz-plots",
+    "image": "/ArviZ_fav.svg",
+    "description": "Plotting functions and static battery plots for ArviZ",
+    "tags": ["python", "numpy", "xarray", "git"],
+    "source_code": "https://github.com/arviz-devs/arviz-plots"
+  },
+  {
+    "id": 3,
+    "name": "arviz-base",
+    "image": "/ArviZ_fav.svg",
+    "description": "Base classes and data structures for ArviZ",
+    "tags": ["python", "numpy", "xarray", "git"],
+    "source_code": "https://github.com/arviz-devs/arviz-base"
+  },
+  {
+    "id": 4,
+    "name": "EABM",
+    "image": "/ArviZ_fav.svg",
+    "description": "Source code for the book Exploratory Analysis of Bayesian Models",
+    "tags": ["python", "numpy", "xarray", "git"],
+    "source_code": "https://github.com/arviz-devs/EABM"
+  },
+  {
+    "id": 5,
     "name": "ModernDiD",
     "image": "/moderndid.svg",
-    "description": "Python package implementing modern DiD estimators with diagnostic tools and sensitivity analysis",
+    "description": "Modern DiD estimators with diagnostic tools and sensitivity analysis",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/moderndid"
   },
   {
-    "id": 3,
+    "id": 6,
     "name": "Sieve",
     "image": "/sieve.svg",
-    "description": "Python package for non-parametric regression using the method of sieves in multivariate tensor product spaces",
+    "description": "Non-parametric regression using the method of sieves in multivariate tensor product spaces",
     "tags": ["python", "numpy", "git"],
     "source_code": "https://github.com/jordandeklerk/sieve"
   }
