@@ -6,6 +6,8 @@ const ProjectCard = ({ project }) => {
     const iconMap = {
       python: '/python.svg',
       xarray: '/xarray.svg',
+      scipy: '/scipy.svg',
+      pandas: '/pandas.svg',
       pytorch: '/pytorch.svg',
       numpy: '/numpy.svg',
       git: '/git.svg',

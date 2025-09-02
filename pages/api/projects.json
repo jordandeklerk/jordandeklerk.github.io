@@ -4,7 +4,7 @@
     "name": "arviz-stats",
     "image": "/ArviZ_fav.svg",
     "description": "Statistical computations and diagnostics for ArviZ",
-    "tags": ["python", "numpy", "xarray", "git"],
+    "tags": ["python", "numpy", "scipy", "xarray"],
     "source_code": "https://github.com/arviz-devs/arviz-stats"
   },
   {
@@ -12,7 +12,7 @@
     "name": "arviz-plots",
     "image": "/ArviZ_fav.svg",
     "description": "Plotting functions and static battery plots for ArviZ",
-    "tags": ["python", "numpy", "xarray", "git"],
+    "tags": ["python", "numpy", "scipy", "xarray"],
     "source_code": "https://github.com/arviz-devs/arviz-plots"
   },
   {
@@ -20,7 +20,7 @@
     "name": "arviz-base",
     "image": "/ArviZ_fav.svg",
     "description": "Base classes and data structures for ArviZ",
-    "tags": ["python", "numpy", "xarray", "git"],
+    "tags": ["python", "numpy", "scipy", "xarray"],
     "source_code": "https://github.com/arviz-devs/arviz-base"
   },
   {
@@ -28,7 +28,7 @@
     "name": "EABM",
     "image": "/ArviZ_fav.svg",
     "description": "Source code for the book Exploratory Analysis of Bayesian Models",
-    "tags": ["python", "numpy", "xarray", "git"],
+    "tags": ["python", "numpy", "scipy", "xarray"],
     "source_code": "https://github.com/arviz-devs/EABM"
   },
   {
@@ -36,7 +36,7 @@
     "name": "ModernDiD",
     "image": "/moderndid.svg",
     "description": "Modern DiD estimators with diagnostic tools and sensitivity analysis",
-    "tags": ["python", "numpy", "git"],
+    "tags": ["python", "numpy", "scipy", "pandas"],
     "source_code": "https://github.com/jordandeklerk/moderndid"
   },
   {
@@ -44,7 +44,7 @@
     "name": "Sieve",
     "image": "/sieve.svg",
     "description": "Non-parametric regression using the method of sieves in multivariate tensor product spaces",
-    "tags": ["python", "numpy", "git"],
+    "tags": ["python", "numpy", "scipy"],
     "source_code": "https://github.com/jordandeklerk/sieve"
   }
 ]
