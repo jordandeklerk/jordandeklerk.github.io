@@ -6,8 +6,12 @@ export default function HomePage() {
   const techStack = [
     { name: 'Python', icon: '/python.svg' },
     { name: 'R', icon: '/r.png' },
+    { name: 'Xarray', icon: '/xarray.svg'},
+    { name: 'Pandas', icon: '/pandas.svg'},
+    { name: 'SciPy', icon: '/scipy.svg'},
+    { name: 'Scikit-learn', icon: '/scikit.svg'},
+    { name: 'ArviZ', icon: '/ArviZ_fav.svg'},
     { name: 'Pytorch', icon: '/pytorch.svg' },
-    { name: 'Scikit-learn', icon: '/scikit.svg' },
     { name: 'TensorFlow', icon: '/tensorflow.svg' },
     { name: 'Hugging Face', icon: '/hugging.svg' },
     { name: 'Javascript', icon: '/javascript.svg' },
@@ -63,9 +67,6 @@ export default function HomePage() {
             <h1 className={styles.name}>Jordan Deklerk</h1>
             <h6 className={styles.bio}>Senior Data Scientist</h6>
             <div className={styles.buttonContainer}>
-              <Link href="/resume">
-                <button className={styles.button}>Resume</button>
-              </Link>
               <Link href="/contact">
                 <button className={styles.button}>Contact</button>
               </Link>

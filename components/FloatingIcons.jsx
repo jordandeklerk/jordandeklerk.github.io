@@ -10,7 +10,7 @@ const FloatingIcons = ({ icons }) => {
     const iconElements = container.children;
 
     const animateIcon = (icon) => {
-      const speed = 0.1 + Math.random() * 0.2; // Reduced speed range
+      const speed = 0.05 + Math.random() * 0.1; // Slower speed range
       const angle = Math.random() * 2 * Math.PI; // random direction
       const vx = Math.cos(angle) * speed;
       const vy = Math.sin(angle) * speed;
