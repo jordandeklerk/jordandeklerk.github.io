@@ -1,0 +1,1104 @@
+/* ---------------------------------------------------------------
+   jordandeklerk.github.io
+   One stylesheet, no build step. Colours and sizes are set once
+   in :root, so most changes are a one-line edit there.
+   --------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Roboto Serif";
+  src: url("/assets/fonts/RobotoSerif-latin.woff2") format("woff2");
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Flex";
+  src: url("/assets/fonts/RobotoFlex-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: oblique 0deg 10deg;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Colour: white paper, deep-water ink, one teal for links. */
+  --paper: #ffffff;
+  --ink: #10222e;
+  --slate: #54656f;
+  --tide: #0b6a85;
+  --rule: #dde6ea;
+  --wash: #f1f5f7;
+
+  /* Contribution calendar: no activity, then four levels of one green */
+  --heat-0: #ebeef1;
+  --heat-1: #62c77c;
+  --heat-2: #38a85a;
+  --heat-3: #23823f;
+  --heat-4: #155a2b;
+
+  /* Pull request states, as GitHub colours them */
+  --state-open: #1a7f37;
+  --state-merged: #8250df;
+  --state-closed: #cf222e;
+  --state-open-text: #1a7f37;
+  --state-merged-text: #8250df;
+  --state-closed-text: #cf222e;
+
+  --serif: "Roboto Serif", Georgia, "Times New Roman", serif;
+  --sans: "Roboto Flex", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type scale */
+  --text-sm: 0.9375rem;
+  --text-base: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.1875rem, 1.1rem + 0.45vw, 1.3125rem);
+  --text-h2: clamp(1.5rem, 1.3rem + 0.9vw, 1.875rem);
+  --text-h1: clamp(2.125rem, 1.6rem + 2.4vw, 3rem);
+
+  /* Layout */
+  --measure: 38rem; /* reading column */
+  --aside: 17rem; /* photo, logos and link lists */
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* Dark mode uses the gray of the GitHub Dark theme in VS Code. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #24292e;
+    --ink: #e1e4e8;
+    --slate: #959da5;
+    --tide: #79b8ff;
+    --rule: #3d444d;
+    --wash: #2d333b;
+
+    --heat-0: #2d333b;
+    --heat-1: #2e7d46;
+    --heat-2: #37994f;
+    --heat-3: #45b862;
+    --heat-4: #6fdd8b;
+
+    --state-open: #238636;
+    --state-merged: #8957e5;
+    --state-closed: #da3633;
+    --state-open-text: #3fb950;
+    --state-merged-text: #a371f7;
+    --state-closed-text: #f85149;
+  }
+}
+
+/* --- Base ------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--text-base);
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ul,
+pre {
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+a {
+  color: var(--tide);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--tide);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--tide) 24%, transparent);
+}
+
+em,
+cite {
+  font-style: oblique 10deg;
+}
+
+strong {
+  font-weight: 600;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+.wrap {
+  max-width: 66rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  padding: 0.5rem 0.875rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 0.375rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* Vertical rhythm for running text */
+.flow > * + * {
+  margin-top: 1.15em;
+}
+
+/* --- Header ---------------------------------------------------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-block: clamp(1.25rem, 3.5vw, 2rem);
+}
+
+/* The thin line under the header is a density strip in ArviZ's colours: a
+   made-up posterior with several modes, where colour stands for how much
+   probability sits at each point (the logo's deep teal for little, its light
+   blue for a lot). */
+.banner {
+  height: 6px;
+  margin-bottom: clamp(2rem, 6vw, 4.5rem);
+  background: linear-gradient(90deg, #0a869b 0.0%, #0799a7 0.8%, #02b2b7 1.7%, #0cbfc5 2.5%, #1ec0ce 3.4%, #24c0d1 4.2%, #1bc0cc 5.0%, #09bfc4 5.9%, #02b6ba 6.7%, #03acb3 7.6%, #03afb5 8.4%, #00bcbd 9.2%, #12c0c8 10.1%, #28c0d3 10.9%, #3bc1dc 11.8%, #46c1e1 12.6%, #45c1e1 13.4%, #3ac1dc 14.3%, #27c0d2 15.1%, #0fbfc6 16.0%, #01b7ba 16.8%, #04a6b0 17.6%, #05a0ac 18.5%, #04a6b0 19.3%, #02b6b9 20.2%, #08bfc3 21.0%, #11bfc8 21.8%, #0fbfc6 22.7%, #03bfc0 23.5%, #02b3b8 24.4%, #03abb3 25.2%, #03aeb4 26.1%, #01babc 26.9%, #0dbfc6 27.7%, #21c0cf 28.6%, #31c0d7 29.4%, #3cc1dd 30.3%, #40c1de 31.1%, #3bc1dc 31.9%, #2ec0d6 32.8%, #1dc0cd 33.6%, #0cbfc5 34.5%, #01bcbd 35.3%, #02b5b9 36.1%, #01b8bb 37.0%, #06bfc2 37.8%, #15c0c9 38.7%, #1fc0ce 39.5%, #1fc0ce 40.3%, #14c0c9 41.2%, #02bfc0 42.0%, #02b1b6 42.9%, #04aab2 43.7%, #03afb5 44.5%, #00bfbf 45.4%, #15c0ca 46.2%, #2cc0d5 47.1%, #3ec1dd 47.9%, #46c1e2 48.7%, #44c1e1 49.6%, #37c1da 50.4%, #23c0d0 51.3%, #0bbfc5 52.1%, #02b4b8 52.9%, #04a6af 53.8%, #05a2ad 54.6%, #03acb3 55.5%, #00bebf 56.3%, #12bfc8 57.1%, #1bc0cc 58.0%, #17c0ca 58.8%, #0abfc4 59.7%, #00bdbe 60.5%, #01b8bb 61.3%, #00bfbf 62.2%, #0ebfc6 63.0%, #1fc0ce 63.9%, #2ec0d6 64.7%, #37c1da 65.5%, #37c1da 66.4%, #2fc0d6 67.2%, #20c0cf 68.1%, #0ebfc6 68.9%, #01bcbd 69.7%, #03b0b6 70.6%, #03afb5 71.4%, #01b9bb 72.3%, #0cbfc5 73.1%, #1dc0cd 73.9%, #27c0d2 74.8%, #24c0d1 75.6%, #16c0ca 76.5%, #04bfc1 77.3%, #02b6b9 78.2%, #02b3b7 79.0%, #01bcbd 79.8%, #0dbfc6 80.7%, #22c0d0 81.5%, #35c0d9 82.4%, #42c1e0 83.2%, #47c1e2 84.0%, #42c1df 84.9%, #34c0d8 85.7%, #20c0cf 86.6%, #0abfc4 87.4%, #02b6ba 88.2%, #04aab2 89.1%, #04a8b1 89.9%, #02b1b7 90.8%, #04bfc1 91.6%, #18c0cb 92.4%, #27c0d2 93.3%, #2ac0d4 94.1%, #21c0cf 95.0%, #0dbfc5 95.8%, #02b3b7 96.6%, #069ba8 97.5%, #0a889d 98.3%, #0c7c95 99.2%, #0d7591 100.0%);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+}
+
+/* The mark is a posterior density with its interval underneath. */
+.mark {
+  width: 2.125rem;
+  height: 1.5rem;
+  flex: none;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mark-curve {
+  stroke: currentColor;
+}
+
+.mark-interval {
+  stroke: var(--tide);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem clamp(1rem, 3vw, 2.25rem);
+}
+
+.site-nav a {
+  padding-block: 0.25rem;
+  color: var(--slate);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--tide);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45em;
+}
+
+main {
+  padding-bottom: clamp(4rem, 10vw, 7rem);
+}
+
+/* --- Split: reading column with a figure and links beside it ----
+   Used for the About page (photo + contact) and for each project
+   (logo + links). On small screens it stacks: figure, text, links.
+   On wide screens the figure and links sit in a side column that
+   stays in view while a long section scrolls past. */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "figure"
+    "body"
+    "links";
+  row-gap: 1.75rem;
+}
+
+.split-aside {
+  display: contents;
+}
+
+.split-figure {
+  grid-area: figure;
+}
+
+.split-body {
+  grid-area: body;
+  max-width: var(--measure);
+}
+
+.split-links {
+  grid-area: links;
+  max-width: var(--measure);
+}
+
+.portrait {
+  width: 7rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: 0.5rem;
+  background: var(--wash);
+}
+
+.logo-tile {
+  display: grid;
+  place-items: center;
+  width: fit-content;
+  min-width: 4.5rem;
+  height: 4.5rem;
+  padding-inline: 1rem;
+  border-radius: 0.5rem;
+  background: var(--wash);
+}
+
+.logo-tile img {
+  width: auto;
+  height: 2.5rem;
+}
+
+/* A logo that includes its name is wide, so it is set a little shorter
+   than the plain marks. */
+.logo-tile .wordmark {
+  height: 2rem;
+}
+
+
+@media (min-width: 60rem) {
+  .split {
+    grid-template-columns: minmax(0, var(--measure)) var(--aside);
+    grid-template-areas: "body aside";
+    justify-content: space-between;
+    align-items: start;
+    column-gap: 4rem;
+  }
+
+  .split-aside {
+    display: block;
+    grid-area: aside;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .split-links {
+    margin-top: 1.25rem;
+  }
+
+  .portrait {
+    width: 100%;
+  }
+
+  .logo-tile {
+    width: 100%;
+    height: 9rem;
+  }
+
+  .logo-tile img {
+    height: 4.5rem;
+  }
+
+  .logo-tile .wordmark {
+    height: 3.75rem;
+  }
+}
+
+/* Label and value pairs: contact details, project links */
+.links {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.links > div {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: 0.75rem;
+  padding-block: 0.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.links > div:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.links dt {
+  color: var(--slate);
+}
+
+.links dd {
+  overflow-wrap: anywhere;
+}
+
+/* --- About ----------------------------------------------------- */
+
+/* Small headings that sit above a list of rows */
+.list-heading {
+  margin-top: 2.75rem;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.list-heading + * {
+  margin-top: 0.9rem;
+}
+
+/* Education: school logo, degree, school */
+.edu {
+  padding: 0;
+  list-style: none;
+}
+
+.edu li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: center;
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.edu img {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.edu-degree {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.edu-school {
+  color: var(--slate);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+/* Publications: title, then authors and where it appeared */
+.pubs {
+  padding: 0;
+  list-style: none;
+}
+
+.pubs li {
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.pub-title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.pub-title a {
+  color: var(--ink);
+}
+
+.pub-detail {
+  margin-top: 0.25rem;
+  color: var(--slate);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.pub-detail strong {
+  color: var(--ink);
+}
+
+/* On the Publications page the list sits in the reading column */
+.pubs--full {
+  max-width: var(--measure);
+}
+
+.pubs--full li {
+  padding-block: 1.25rem;
+}
+
+.pubs--full .pub-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+/* --- Pages with a title (Software) ------------------------------ */
+
+.page-head {
+  max-width: var(--measure);
+  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.page-head h1 {
+  font-family: var(--serif);
+  font-size: var(--text-h1);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.page-head p {
+  margin-top: 1.25rem;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.project {
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 1rem;
+}
+
+.project:last-child {
+  padding-bottom: 0;
+}
+
+.project h2 {
+  font-family: var(--serif);
+  font-size: var(--text-h2);
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+
+.project h2 + * {
+  margin-top: 0.9rem;
+}
+
+/* A small label beside a project's name, such as "Early development" */
+.status {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--slate);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Short bulleted list of major contributions */
+.highlights {
+  padding-left: 1.15em;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.highlights li + li {
+  margin-top: 0.5rem;
+}
+
+.highlights li::marker {
+  color: var(--slate);
+}
+
+/* --- GitHub activity (Software page) ---------------------------- */
+
+.calendar {
+  position: relative;
+  margin: 1.25rem 0 0;
+}
+
+.calendar figcaption {
+  margin-bottom: 0.9rem;
+  color: var(--slate);
+  font-size: var(--text-sm);
+}
+
+/* Narrow screens scroll the calendar sideways instead of shrinking it. */
+.calendar-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: auto repeat(var(--weeks, 53), minmax(10px, 1fr));
+  gap: 3px;
+  color: var(--slate);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: var(--heat-0);
+}
+
+.cell[data-level="1"] {
+  background: var(--heat-1);
+}
+
+.cell[data-level="2"] {
+  background: var(--heat-2);
+}
+
+.cell[data-level="3"] {
+  background: var(--heat-3);
+}
+
+.cell[data-level="4"] {
+  background: var(--heat-4);
+}
+
+.calendar-grid .cell:hover {
+  outline: 1.5px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.calendar-grid .month {
+  grid-row: 1;
+  padding-bottom: 0.3rem;
+  white-space: nowrap;
+}
+
+.calendar-grid .weekday {
+  grid-column: 1;
+  align-self: center;
+  padding-right: 0.4rem;
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 0.6rem;
+  color: var(--slate);
+  font-size: 0.75rem;
+}
+
+.calendar-legend .cell {
+  width: 0.7rem;
+}
+
+.calendar-legend .cell:first-of-type {
+  margin-left: 0.3rem;
+}
+
+.calendar-legend .cell:last-of-type {
+  margin-right: 0.3rem;
+}
+
+.calendar-tip {
+  position: absolute;
+  z-index: 1;
+  margin-top: -0.5rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.375rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+/* Stars, forks, watchers, open issues and open pull requests under a
+   package's links. Sized so all five fit on one line in the side column. */
+.repo-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  margin-top: 0.9rem;
+  font-size: 0.875rem;
+}
+
+.repo-stats a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--slate);
+  text-decoration: none;
+}
+
+.repo-stats a:hover {
+  color: var(--tide);
+}
+
+.repo-stats svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* A project's repositories: name and numbers on one line, a sentence below */
+.repo-rows {
+  padding: 0;
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.repo-rows li {
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.row-name {
+  font-weight: 600;
+}
+
+.row-name a {
+  color: var(--ink);
+}
+
+.row-name .status {
+  margin-left: 0.4rem;
+}
+
+.repo-rows .repo-stats {
+  margin-top: 0;
+}
+
+.repo-rows li > p {
+  margin-top: 0.25rem;
+}
+
+.row-meta {
+  color: var(--slate);
+  font-size: var(--text-sm);
+}
+
+/* A book's cover in the side column */
+.cover {
+  width: 12rem;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 60rem) {
+  .cover {
+    width: 100%;
+  }
+}
+
+/* A reference, with its BibTeX entry behind a toggle */
+.citation {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.bibtex {
+  margin-top: 0.75rem;
+  font-size: var(--text-sm);
+}
+
+.bibtex summary {
+  width: fit-content;
+  color: var(--tide);
+  cursor: pointer;
+}
+
+.bibtex pre {
+  margin-top: 0.6rem;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: var(--wash);
+  line-height: 1.5;
+}
+
+/* Last 30 days: laid out like the activity timeline on a GitHub profile.
+   A label with a rule, then a vertical line with one icon badge per entry. */
+.period {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.period span {
+  margin-left: -0.5rem;
+  color: var(--slate);
+}
+
+.period::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.as-of {
+  margin-top: 1.25rem;
+  color: var(--slate);
+  font-size: 0.8125rem;
+}
+
+.timeline {
+  margin: 1.5rem 0 0 1rem;
+  padding: 0;
+  border-left: 2px solid var(--rule);
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.timeline > li {
+  position: relative;
+  padding: 0.1rem 0 1.75rem 2.25rem;
+}
+
+.timeline > li:last-child {
+  padding-bottom: 0.25rem;
+}
+
+.timeline-badge {
+  position: absolute;
+  top: -0.2rem;
+  left: -17px; /* centres the 32px badge on the 2px line */
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: var(--wash);
+  color: var(--slate);
+}
+
+.timeline-badge svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.repos {
+  margin-top: 0.6rem;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.repos li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.2rem 1.25rem;
+  padding-block: 0.25rem;
+}
+
+.repos .repo {
+  overflow-wrap: break-word;
+}
+
+/* As on GitHub, repository names in the timeline are underlined only on hover. */
+.repos a {
+  text-decoration: none;
+}
+
+.repos a:hover {
+  text-decoration: underline;
+}
+
+.repos .note {
+  margin-left: 0.6rem;
+  color: var(--slate);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.repos .more {
+  color: var(--slate);
+}
+
+/* Commits: a bar showing each repository's share of the busiest one */
+.repos--bars li {
+  grid-template-columns: minmax(0, 1fr) min(30%, 15rem);
+}
+
+.bar span {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--heat-2);
+}
+
+/* Pull requests: a coloured count for each state */
+.states {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.2rem 0.9rem;
+  color: var(--slate);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.state b {
+  display: inline-block;
+  min-width: 1.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.375rem;
+  background: var(--slate);
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.state b[data-state="open"] {
+  background: var(--state-open);
+}
+
+.state b[data-state="merged"] {
+  background: var(--state-merged);
+}
+
+.state b[data-state="closed"] {
+  background: var(--state-closed);
+}
+
+/* The most-discussed pull request: a date beside the headline, then a card
+   with its title, an excerpt, and the size of the change. */
+.timeline .headline a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.timeline .headline a:hover {
+  color: var(--tide);
+}
+
+.timeline .when {
+  float: right;
+  margin-left: 1rem;
+  color: var(--slate);
+  font-size: 0.8125rem;
+  line-height: 1.9;
+}
+
+.pull-card {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.375rem;
+  font-size: var(--text-sm);
+}
+
+.pull-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pull-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pull-title a:hover {
+  color: var(--tide);
+}
+
+.pull-state {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+  fill: var(--slate);
+}
+
+.pull-state--open {
+  fill: var(--state-open-text);
+}
+
+.pull-state--merged {
+  fill: var(--state-merged-text);
+}
+
+.pull-state--closed {
+  fill: var(--state-closed-text);
+}
+
+.pull-excerpt {
+  margin-top: 0.5rem;
+  color: var(--slate);
+}
+
+.pull-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.4rem;
+  margin-top: 0.75rem;
+  color: var(--slate);
+  font-size: 0.8125rem;
+}
+
+.pull-meta .plus {
+  color: var(--state-open-text);
+  font-weight: 600;
+}
+
+.pull-meta .minus {
+  color: var(--state-closed-text);
+  font-weight: 600;
+}
+
+.diffstat {
+  display: inline-flex;
+  gap: 1px;
+  margin-inline: 0.15rem;
+}
+
+.diffstat i {
+  width: 8px;
+  height: 8px;
+  background: var(--rule);
+}
+
+.diffstat i.plus {
+  background: var(--state-open-text);
+}
+
+.diffstat i.minus {
+  background: var(--state-closed-text);
+}
+
+/* On a phone each repository takes two lines: its name, then its bar or states. */
+@media (max-width: 36rem) {
+  .repos li,
+  .repos--bars li {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 0.35rem;
+  }
+
+  .states {
+    justify-content: flex-start;
+  }
+}
+
+/* --- Motion: the mark draws itself once, on the About page ------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .draw-mark .mark-curve,
+  .draw-mark .mark-interval {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  }
+
+  .draw-mark .mark-interval {
+    animation-duration: 0.4s;
+    animation-delay: 0.9s;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

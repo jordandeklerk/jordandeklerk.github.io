@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Software | Jordan Deklerk</title>
+  <meta name="description" content="Open source software by Jordan Deklerk: the ArviZ libraries for exploratory analysis of Bayesian models, ModernDiD for difference-in-differences, and mmmJAX for Bayesian marketing mix modeling.">
+  <meta name="author" content="Jordan Deklerk">
+  <link rel="canonical" href="https://jordandeklerk.github.io/software/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Software | Jordan Deklerk">
+  <meta property="og:description" content="The ArviZ libraries for exploratory analysis of Bayesian models, ModernDiD for difference-in-differences, and mmmJAX for Bayesian marketing mix modeling.">
+  <meta property="og:url" content="https://jordandeklerk.github.io/software/">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#24292e" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/RobotoSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/RobotoFlex-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header wrap">
+    <a class="brand" href="/">
+      <svg class="mark" viewBox="0 0 34 24" aria-hidden="true">
+        <path class="mark-curve" pathLength="1" d="M1.5 16.5C7 16.5 8 2.5 13 2.5c5.5 0 8 14 19.5 14"/>
+        <path class="mark-interval" pathLength="1" d="M7 21.5h16.5"/>
+      </svg>
+      Jordan Deklerk
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">About</a>
+      <a href="/software/" aria-current="page">Software</a>
+      <a href="/publications/">Publications</a>
+      <a href="/resume.pdf">Resume</a>
+    </nav>
+  </header>
+  <div class="banner" aria-hidden="true"></div>
+
+  <main id="main" class="wrap">
+    <header class="page-head">
+      <h1>Software</h1>
+    </header>
+
+    <!-- ArviZ -->
+    <section class="project split" id="arviz" aria-labelledby="arviz-title">
+      <div class="split-aside">
+        <div class="split-figure">
+          <div class="logo-tile"><img src="/assets/img/arviz.svg" width="160" height="160" alt=""></div>
+        </div>
+
+        <div class="split-links">
+          <dl class="links">
+            <div>
+              <dt>Docs</dt>
+              <dd><a href="https://python.arviz.org">python.arviz.org</a></dd>
+            </div>
+            <div>
+              <dt>GitHub</dt>
+              <dd><a href="https://github.com/arviz-devs">arviz-devs</a></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="split-body">
+        <h2 id="arviz-title">ArviZ</h2>
+        <div class="flow">
+          <p><a href="https://python.arviz.org">ArviZ</a> is a Python library for exploratory analysis of Bayesian models. I’m a member of the core development team, where I work on statistical computation and algorithmic design.</p>
+          <p>ArviZ is now developed in three repositories: arviz-stats, arviz-plots and arviz-base. The original arviz repository is the legacy one. The majority of my work is in arviz-stats, on PSIS-LOO cross-validation and model comparison.</p>
+          <p>I’m a co-author of the <a href="https://doi.org/10.21105/joss.09889">paper describing the library</a> in the <cite>Journal of Open Source Software</cite>.</p>
+        </div>
+
+        <h3 class="list-heading">Repositories</h3>
+        <ul class="repo-rows">
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://github.com/arviz-devs/arviz">arviz</a> <span class="status">Legacy</span></span>
+              <p class="repo-stats" data-repo="arviz-devs/arviz" hidden></p>
+            </div>
+            <p><span class="repo-description" data-repo="arviz-devs/arviz">Exploratory analysis of Bayesian models with Python.</span></p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://github.com/arviz-devs/arviz-stats">arviz-stats</a></span>
+              <p class="repo-stats" data-repo="arviz-devs/arviz-stats" hidden></p>
+            </div>
+            <p><span class="repo-description" data-repo="arviz-devs/arviz-stats">Statistical computation and diagnostics for ArviZ.</span></p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://github.com/arviz-devs/arviz-plots">arviz-plots</a></span>
+              <p class="repo-stats" data-repo="arviz-devs/arviz-plots" hidden></p>
+            </div>
+            <p><span class="repo-description" data-repo="arviz-devs/arviz-plots">ArviZ modular plotting.</span></p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://github.com/arviz-devs/arviz-base">arviz-base</a></span>
+              <p class="repo-stats" data-repo="arviz-devs/arviz-base" hidden></p>
+            </div>
+            <p><span class="repo-description" data-repo="arviz-devs/arviz-base">Base ArviZ features and converters.</span></p>
+          </li>
+        </ul>
+
+        <h3 class="list-heading">Highlights</h3>
+        <ul class="highlights">
+          <li><a href="https://github.com/arviz-devs/arviz-stats/pull/106">Subsampled PSIS-LOO</a>, which makes cross-validation practical on large datasets.</li>
+          <li><a href="https://github.com/arviz-devs/arviz-stats/pull/126">Moment matching</a>, which repairs unreliable leave-one-out estimates without refitting the model.</li>
+          <li><a href="https://github.com/arviz-devs/arviz-stats/pull/148">Exact refits</a> and <a href="https://github.com/arviz-devs/arviz-stats/pull/158">K-fold cross-validation</a>, for cases where importance sampling isn’t enough.</li>
+          <li><a href="https://github.com/arviz-devs/arviz-stats/pull/196">Predictive scores</a> such as CRPS, and <a href="https://github.com/arviz-devs/arviz-stats/pull/216">model comparison</a> for subsampled results.</li>
+          <li>The project’s <a href="https://github.com/arviz-devs/arviz/pull/2637">AI usage policy</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EABM -->
+    <section class="project split" id="eabm" aria-labelledby="eabm-title">
+      <div class="split-aside">
+        <div class="split-figure">
+          <img class="cover" src="/assets/img/eabm-cover.png" width="720" height="378" alt="Cover of the online book Exploratory Analysis of Bayesian Models, by arviz-devs">
+        </div>
+
+        <div class="split-links">
+          <dl class="links">
+            <div>
+              <dt>Read</dt>
+              <dd><a href="https://arviz-devs.github.io/EABM/">arviz-devs.github.io/EABM</a></dd>
+            </div>
+            <div>
+              <dt>GitHub</dt>
+              <dd><a href="https://github.com/arviz-devs/EABM">arviz-devs/EABM</a></dd>
+            </div>
+            <div>
+              <dt>DOI</dt>
+              <dd><a href="https://doi.org/10.5281/zenodo.15127548">10.5281/zenodo.15127548</a></dd>
+            </div>
+          </dl>
+          <p class="repo-stats" data-repo="arviz-devs/EABM" hidden></p>
+        </div>
+      </div>
+
+      <div class="split-body">
+        <h2 id="eabm-title">EABM <span class="status">Book</span></h2>
+        <div class="flow">
+          <p><a href="https://arviz-devs.github.io/EABM/"><cite>Exploratory Analysis of Bayesian Models</cite></a> is the online book that teaches the workflow behind ArviZ, covering MCMC diagnostics, predictive checks, model comparison and prior elicitation. I’m one of its three authors, with Osvaldo Martin and Oriol Abril-Pla.</p>
+        </div>
+
+        <h3 class="list-heading">Chapters I worked on</h3>
+        <ul class="repo-rows">
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://arviz-devs.github.io/EABM/Chapters/Model_comparison.html">Model Comparison</a> <span class="status">Contributor</span></span>
+              <span class="row-meta">Chapter 7</span>
+            </div>
+            <p>The book’s theory chapter. Its sections on high Pareto k values and on datasets too large for full LOO-CV hold the theory I wrote for moment matching and subsampling.</p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://arviz-devs.github.io/EABM/Chapters/Model_comparison_large_data.html">Model Comparison for Large Data</a> <span class="status">Author</span></span>
+              <span class="row-meta">Chapter 8</span>
+            </div>
+            <p>Subsampled PSIS-LOO-CV in practice, with worked examples and automatic subsampling for PyMC and Bambi models.</p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://arviz-devs.github.io/EABM/Chapters/Moment_Matching.html">Moment matching for improved PSIS-LOO-CV</a> <span class="status">Author</span></span>
+              <span class="row-meta">Chapter 9</span>
+            </div>
+            <p>Moment matching in practice, worked through on the roaches example, with how to read its diagnostics and automatic moment matching for PyMC and Bambi models.</p>
+          </li>
+          <li>
+            <div class="row-head">
+              <span class="row-name"><a href="https://github.com/arviz-devs/EABM/pull/223">PSIS-LFO-CV</a> <span class="status">In review</span></span>
+            </div>
+            <p>A chapter on PSIS leave-future-out cross-validation, open as a pull request.</p>
+          </li>
+        </ul>
+
+        <h3 class="list-heading">Citation</h3>
+        <p class="citation">Martin, O. A., Abril-Pla, O., and Deklerk, J. (2026). <cite>Exploratory Analysis of Bayesian Models</cite> (v0.4.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.15127548">https://doi.org/10.5281/zenodo.15127548</a></p>
+        <details class="bibtex">
+          <summary>BibTeX</summary>
+          <pre><code>@book{eabm_2025,
+  author    = {Osvaldo A Martin and Oriol Abril-Pla and Jordan Deklerk},
+  title     = {Exploratory analysis of Bayesian models},
+  month     = feb,
+  year      = 2026,
+  publisher = {Zenodo},
+  version   = {v0.4.0},
+  doi       = {10.5281/zenodo.15127548},
+  url       = {https://doi.org/10.5281/zenodo.15127548}
+}</code></pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- ModernDiD -->
+    <section class="project split" id="moderndid" aria-labelledby="moderndid-title">
+      <div class="split-aside">
+        <div class="split-figure">
+          <div class="logo-tile"><img src="/assets/img/moderndid.svg" width="231" height="160" alt=""></div>
+        </div>
+
+        <div class="split-links">
+          <dl class="links">
+            <div>
+              <dt>Docs</dt>
+              <dd><a href="https://moderndid.readthedocs.io">moderndid.readthedocs.io</a></dd>
+            </div>
+            <div>
+              <dt>GitHub</dt>
+              <dd><a href="https://github.com/jordandeklerk/moderndid">jordandeklerk/moderndid</a></dd>
+            </div>
+            <div>
+              <dt>PyPI</dt>
+              <dd><a href="https://pypi.org/project/moderndid/">moderndid</a></dd>
+            </div>
+          </dl>
+          <p class="repo-stats" data-repo="jordandeklerk/moderndid" hidden></p>
+        </div>
+      </div>
+
+      <div class="split-body">
+        <h2 id="moderndid-title">ModernDiD</h2>
+        <div class="flow">
+          <p><a href="https://moderndid.readthedocs.io">ModernDiD</a> is a Python library for difference-in-differences that I created and maintain. It is written for applied researchers, economists and data scientists who estimate the effects of policies and treatments.</p>
+          <p>A two-way fixed effects regression, long the default way to run DiD, can give misleading answers when treatment effects differ across groups or change over time. ModernDiD implements the estimators that recent research developed to avoid that problem, covering <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_staggered_did.html">staggered adoption</a>, <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_triple_did.html">triple differences</a>, <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_cont_did.html">continuous</a> and <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_inter_did.html">intertemporal</a> treatments, <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_etwfe.html">extended TWFE</a> and <a href="https://moderndid.readthedocs.io/en/latest/user_guide/example_honest_did.html">sensitivity analysis</a>.</p>
+          <p>Estimation runs in parallel on one machine, with GPU support for some estimators and Spark support for staggered DiD on panels too large for one machine.</p>
+        </div>
+      </div>
+    </section>
+    <!-- mmmJAX -->
+    <section class="project split" id="mmmjax" aria-labelledby="mmmjax-title">
+      <div class="split-aside">
+        <div class="split-figure">
+          <div class="logo-tile">
+            <picture>
+              <source srcset="/assets/img/mmmjax-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wordmark" src="/assets/img/mmmjax.svg" width="420" height="160" alt="">
+            </picture>
+          </div>
+        </div>
+
+        <div class="split-links">
+          <dl class="links">
+            <div>
+              <dt>Docs</dt>
+              <dd><a href="https://mmmjax.readthedocs.io">mmmjax.readthedocs.io</a></dd>
+            </div>
+            <div>
+              <dt>GitHub</dt>
+              <dd><a href="https://github.com/jordandeklerk/mmmJAX">jordandeklerk/mmmJAX</a></dd>
+            </div>
+          </dl>
+          <p class="repo-stats" data-repo="jordandeklerk/mmmJAX" hidden></p>
+        </div>
+      </div>
+
+      <div class="split-body">
+        <h2 id="mmmjax-title">mmmJAX <span class="status">Early development</span></h2>
+        <div class="flow">
+          <p><a href="https://mmmjax.readthedocs.io">mmmJAX</a> is a Python library I’m developing for Bayesian marketing mix modeling in JAX, built for experienced practitioners. You write the model yourself as a Stan-style program of plain Python blocks, and the library makes none of the modeling decisions for you.</p>
+          <p>Everything around the model comes packaged, from data preparation and media transformations to sampling, budget optimization and plots.</p>
+          <p>mmmJAX is in early development. It is in alpha and not yet on PyPI, so for now it installs from GitHub.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GitHub activity: filled in by /assets/js/github.js, hidden until it loads -->
+    <section class="project activity" id="activity" aria-labelledby="activity-title" hidden>
+      <h2 id="activity-title">GitHub activity</h2>
+
+      <figure class="calendar" hidden>
+        <figcaption id="calendar-caption"><span data-total></span> contributions in the last year</figcaption>
+        <div class="calendar-scroll" tabindex="0" role="group" aria-labelledby="calendar-caption">
+          <div class="calendar-grid" role="img" aria-labelledby="calendar-caption"></div>
+        </div>
+        <p class="calendar-legend" aria-hidden="true">
+          Less
+          <span class="cell" data-level="0"></span><span class="cell" data-level="1"></span><span class="cell" data-level="2"></span><span class="cell" data-level="3"></span><span class="cell" data-level="4"></span>
+          More
+        </p>
+        <div class="calendar-tip" role="presentation" hidden></div>
+      </figure>
+
+      <div class="recent" hidden>
+        <h3 class="period"></h3>
+        <ul class="timeline"></ul>
+        <p class="as-of"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/js/github.js" defer></script>
+</body>
+</html>
