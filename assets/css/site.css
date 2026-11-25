@@ -522,7 +522,7 @@ main {
   }
 }
 
-/* --- Pages with a title (Software) ------------------------------ */
+/* --- A page title (the 404 page) and the projects on the Software page --- */
 
 .page-head {
   max-width: var(--measure);
@@ -547,6 +547,12 @@ main {
   padding-block: clamp(2.5rem, 6vw, 4rem);
   border-top: 1px solid var(--rule);
   scroll-margin-top: 1rem;
+}
+
+/* The first project starts the page, so it needs no rule or space above it */
+.project:first-of-type {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .project:last-child {
