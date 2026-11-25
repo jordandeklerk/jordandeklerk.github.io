@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-25T03:37:03Z",
+ "generated": "2026-11-25T20:44:12Z",
  "user": "jordandeklerk",
  "calendar": {
-  "total": 2316,
+  "total": 2317,
   "days": [
    {
     "date": "2025-11-23",
@@ -1836,119 +1836,13 @@
    },
    {
     "date": "2026-11-24",
-    "count": 6,
+    "count": 5,
     "level": 1
-   }
-  ]
- },
- "month": {
-  "label": "November 2026",
-  "entries": [
-   {
-    "kind": "commits",
-    "total": 69,
-    "repos": [
-     {
-      "name": "jordandeklerk/moderndid",
-      "count": 33
-     },
-     {
-      "name": "jordandeklerk/mmmJAX",
-      "count": 18
-     },
-     {
-      "name": "arviz-devs/arviz-stats",
-      "count": 14
-     },
-     {
-      "name": "arviz-devs/arviz-base",
-      "count": 2
-     },
-     {
-      "name": "arviz-devs/arviz-plots",
-      "count": 1
-     },
-     {
-      "name": "arviz-devs/arviz",
-      "count": 1
-     }
-    ]
    },
    {
-    "kind": "popular",
-    "repo": "arviz-devs/arviz-base",
-    "number": 241,
-    "title": "Fix the external cmdstanpy tests on cmdstanpy 2",
-    "url": "https://github.com/arviz-devs/arviz-base/pull/241",
-    "excerpt": "The Special_versions Azure job has been red on every PR for a while. It runs against cmdstanpy develop, which is now 2.0, and our tests were building the fit from…",
-    "state": "open",
-    "created": "2026-11-19T02:02:46Z",
-    "additions": 3794,
-    "deletions": 3317,
-    "comments": 4
-   },
-   {
-    "kind": "pulls",
-    "total": 45,
-    "other": true,
-    "repos": [
-     {
-      "name": "jordandeklerk/moderndid",
-      "count": 23,
-      "open": 0,
-      "merged": 23,
-      "closed": 0
-     },
-     {
-      "name": "arviz-devs/arviz-stats",
-      "count": 11,
-      "open": 1,
-      "merged": 10,
-      "closed": 0
-     },
-     {
-      "name": "jordandeklerk/mmmJAX",
-      "count": 8,
-      "open": 1,
-      "merged": 7,
-      "closed": 0
-     },
-     {
-      "name": "arviz-devs/arviz-base",
-      "count": 1,
-      "open": 0,
-      "merged": 1,
-      "closed": 0
-     },
-     {
-      "name": "arviz-devs/arviz",
-      "count": 1,
-      "open": 1,
-      "merged": 0,
-      "closed": 0
-     },
-     {
-      "name": "arviz-devs/arviz-plots",
-      "count": 1,
-      "open": 0,
-      "merged": 1,
-      "closed": 0
-     }
-    ]
-   },
-   {
-    "kind": "reviews",
-    "total": 12,
-    "repos": [
-     {
-      "name": "arviz-devs/arviz-stats",
-      "count": 11
-     },
-     {
-      "name": "arviz-devs/arviz-base",
-      "count": 1
-     }
-    ]
+    "date": "2026-11-25",
+    "count": 2,
+    "level": 1
    }
   ]
  },
@@ -1956,7 +1850,7 @@
   "arviz-devs/arviz-stats": {
    "description": "Statistical computation and diagnostics for ArviZ.",
    "stars": 18,
-   "forks": 53,
+   "forks": 55,
    "watching": 13,
    "issues": 32,
    "pulls": 19
@@ -1967,12 +1861,12 @@
    "forks": 50,
    "watching": 12,
    "issues": 38,
-   "pulls": 20
+   "pulls": 21
   },
   "arviz-devs/arviz-base": {
    "description": "Base ArviZ features and converters",
    "stars": 9,
-   "forks": 32,
+   "forks": 34,
    "watching": 12,
    "issues": 30,
    "pulls": 15
@@ -1980,7 +1874,7 @@
   "arviz-devs/arviz": {
    "description": "Exploratory analysis of Bayesian models with Python",
    "stars": 1869,
-   "forks": 515,
+   "forks": 516,
    "watching": 50,
    "issues": 107,
    "pulls": 12
