@@ -778,10 +778,12 @@ main {
   font-size: var(--text-sm);
 }
 
-/* A book's cover in the side column */
+/* A book's cover in the side column. The cover is upright and its paper is
+   nearly white, so it gets a hairline edge to stand apart from the page. */
 .cover {
-  width: 12rem;
-  border-radius: 0.5rem;
+  width: 9rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0 0 1px var(--rule);
 }
 
 @media (min-width: 60rem) {
