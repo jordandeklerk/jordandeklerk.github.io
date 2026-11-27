@@ -212,7 +212,8 @@ code {
    blue for a lot). */
 .banner {
   height: 6px;
-  margin-bottom: clamp(2rem, 6vw, 4.5rem);
+  /* The same gap on every page, so each page's text starts at the same height */
+  margin-bottom: 1.75rem;
   background: linear-gradient(90deg, #0a869b 0.0%, #0799a7 0.8%, #02b2b7 1.7%, #0cbfc5 2.5%, #1ec0ce 3.4%, #24c0d1 4.2%, #1bc0cc 5.0%, #09bfc4 5.9%, #02b6ba 6.7%, #03acb3 7.6%, #03afb5 8.4%, #00bcbd 9.2%, #12c0c8 10.1%, #28c0d3 10.9%, #3bc1dc 11.8%, #46c1e1 12.6%, #45c1e1 13.4%, #3ac1dc 14.3%, #27c0d2 15.1%, #0fbfc6 16.0%, #01b7ba 16.8%, #04a6b0 17.6%, #05a0ac 18.5%, #04a6b0 19.3%, #02b6b9 20.2%, #08bfc3 21.0%, #11bfc8 21.8%, #0fbfc6 22.7%, #03bfc0 23.5%, #02b3b8 24.4%, #03abb3 25.2%, #03aeb4 26.1%, #01babc 26.9%, #0dbfc6 27.7%, #21c0cf 28.6%, #31c0d7 29.4%, #3cc1dd 30.3%, #40c1de 31.1%, #3bc1dc 31.9%, #2ec0d6 32.8%, #1dc0cd 33.6%, #0cbfc5 34.5%, #01bcbd 35.3%, #02b5b9 36.1%, #01b8bb 37.0%, #06bfc2 37.8%, #15c0c9 38.7%, #1fc0ce 39.5%, #1fc0ce 40.3%, #14c0c9 41.2%, #02bfc0 42.0%, #02b1b6 42.9%, #04aab2 43.7%, #03afb5 44.5%, #00bfbf 45.4%, #15c0ca 46.2%, #2cc0d5 47.1%, #3ec1dd 47.9%, #46c1e2 48.7%, #44c1e1 49.6%, #37c1da 50.4%, #23c0d0 51.3%, #0bbfc5 52.1%, #02b4b8 52.9%, #04a6af 53.8%, #05a2ad 54.6%, #03acb3 55.5%, #00bebf 56.3%, #12bfc8 57.1%, #1bc0cc 58.0%, #17c0ca 58.8%, #0abfc4 59.7%, #00bdbe 60.5%, #01b8bb 61.3%, #00bfbf 62.2%, #0ebfc6 63.0%, #1fc0ce 63.9%, #2ec0d6 64.7%, #37c1da 65.5%, #37c1da 66.4%, #2fc0d6 67.2%, #20c0cf 68.1%, #0ebfc6 68.9%, #01bcbd 69.7%, #03b0b6 70.6%, #03afb5 71.4%, #01b9bb 72.3%, #0cbfc5 73.1%, #1dc0cd 73.9%, #27c0d2 74.8%, #24c0d1 75.6%, #16c0ca 76.5%, #04bfc1 77.3%, #02b6b9 78.2%, #02b3b7 79.0%, #01bcbd 79.8%, #0dbfc6 80.7%, #22c0d0 81.5%, #35c0d9 82.4%, #42c1e0 83.2%, #47c1e2 84.0%, #42c1df 84.9%, #34c0d8 85.7%, #20c0cf 86.6%, #0abfc4 87.4%, #02b6ba 88.2%, #04aab2 89.1%, #04a8b1 89.9%, #02b1b7 90.8%, #04bfc1 91.6%, #18c0cb 92.4%, #27c0d2 93.3%, #2ac0d4 94.1%, #21c0cf 95.0%, #0dbfc5 95.8%, #02b3b7 96.6%, #069ba8 97.5%, #0a889d 98.3%, #0c7c95 99.2%, #0d7591 100.0%);
 }
 
@@ -500,10 +501,6 @@ main {
 /* On a laptop the About page is set a little tighter than the other pages,
    so that all of it fits on one screen without scrolling. */
 @media (min-width: 60rem) {
-  .home .banner {
-    margin-bottom: 1.75rem;
-  }
-
   .home main {
     padding-bottom: 0.75rem;
   }
